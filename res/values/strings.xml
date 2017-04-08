@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TaskManager</string>
+    <string name="novi_zadatak">Нови задатак</string>
+    <string name="statistika">Статистика</string>
+    <string name="ime_zadatka">Име задатка</string>
+    <string name="opis_zadatka">Опис задатка</string>
+    <string name="podsjeti_me_15_min_prije_isteka">Подсјети ме 15 мин прије истека</string>
+    <string name="visok">Висок</string>
+    <string name="srednji">Средњи</string>
+    <string name="nizak">Низак</string>
+    <string name="dodaj">Додај</string>
+    <string name="otkazi">Откажи</string>
+    <string name="sacuvaj">Сачувај</string>
+    <string name="obrisi">Обриши</string>
+    <string name="datum">15.06.2017.</string>
+</resources>
