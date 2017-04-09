@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">TaskManager</string>
     <string name="novi_zadatak">Нови задатак</string>
     <string name="statistika">Статистика</string>
@@ -12,5 +13,5 @@
     <string name="otkazi">Откажи</string>
     <string name="sacuvaj">Сачувај</string>
     <string name="obrisi">Обриши</string>
-    <string name="datum">15.06.2017.</string>
+
 </resources>

@@ -1,17 +1,13 @@
 package ra241_2015.pnrs1.rtrk.taskmanager;
 
-import android.graphics.drawable.Drawable;
-
-
-
 class Task {
 
     String mText;
-    Drawable mImage;
+    int mImage;
     String mDate;
-    Drawable mAlarm;
+    int mAlarm;
 
-    Task(String text, Drawable drawable,String date, Drawable alarm) {
+    Task(String text, int drawable,String date, int alarm) {
         mText = text;
         mImage = drawable;
         mDate = date;

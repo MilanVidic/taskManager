@@ -7,9 +7,10 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -29,13 +30,17 @@ public class Activity2 extends AppCompatActivity {
     EditText opisZadatka;
 
     Boolean flag = false;
+    Boolean greenFlag, redFlag, yellowFlag;
 
 
     DatePicker datePicker;
 
-    String datum, text;
+    String datum;
+    String imeZadatkaText;
     Calendar calendar, calendar2;
     Date today;
+
+    CheckBox podsjetnkikCheckBox;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -52,18 +57,15 @@ public class Activity2 extends AppCompatActivity {
         imeZadatka = (EditText) findViewById(R.id.imeZadatka);
         opisZadatka = (EditText) findViewById(R.id.opisZadatka);
 
+        podsjetnkikCheckBox = (CheckBox) findViewById(R.id.checkBox2);
+
         String data = getIntent().getExtras().getString("IntentDataDodaj");
         String data1 = getIntent().getExtras().getString("IntentDataOtkazi");
 
-        text = imeZadatka.getText().toString();
 
-
-        System.out.print(text);
 
         btnDodaj.setText(data);
         btnOtkazi.setText(data1);
-
-
 
 
 
@@ -79,6 +81,10 @@ public class Activity2 extends AppCompatActivity {
                 btnYellow.setEnabled(true);
                 btnYellow.setAlpha(1f);
                 flag=true;
+                redFlag = false;
+                greenFlag = true;
+                yellowFlag = false;
+
                 checkFieldsForEmptyValues();
 
             }
@@ -96,6 +102,9 @@ public class Activity2 extends AppCompatActivity {
                 btnYellow.setEnabled(true);
                 btnYellow.setAlpha(1f);
                 flag=true;
+                redFlag = true;
+                greenFlag = false;
+                yellowFlag = false;
                 checkFieldsForEmptyValues();
 
             }
@@ -111,7 +120,9 @@ public class Activity2 extends AppCompatActivity {
                 btnRed.setAlpha(1f);
                 btnGreen.setEnabled(true);
                 btnGreen.setAlpha(1f);
-
+                yellowFlag = true;
+                redFlag = false;
+                greenFlag = false;
                 flag=true;
                 checkFieldsForEmptyValues();
             }
@@ -124,7 +135,7 @@ public class Activity2 extends AppCompatActivity {
 
 
         datePicker = (DatePicker) findViewById(R.id.datePicker2);
-        //datePicker.setMinDate(System.currentTimeMillis());
+       // datePicker.setMinDate(System.currentTimeMillis());
 
 
 
@@ -157,18 +168,18 @@ public class Activity2 extends AppCompatActivity {
 
                 Date dateSpecified = calendar.getTime();
 
-                Log.d("Milan", "DATUM " + calendar2.get(Calendar.MONTH));
+               /* Log.d("Milan", "DATUM " + calendar2.get(Calendar.MONTH));
                 Log.d("Milan", "DATUM " + calendar2.get(Calendar.MONTH)+2);
                 Log.d("Milan", "DATUM " + calendar2.get(Calendar.DAY_OF_MONTH)+5+1);
                 Log.d("Milan", "DATUM " + month);
                 Log.d("Milan", "DATUM " + dayOfMonth);
-                Log.d("Milan", "DATUM " + year);
+                Log.d("Milan", "DATUM " + year);*/
                 if (dateSpecified.equals(today)) {
                     datum = "Danas";
                 }
-               /* else if (dateSpecified.compareTo(today) == 1) {
-                    datum = "Sutra";*/
-                else if (calendar2.get(Calendar.MONTH) == month && calendar2.get(Calendar.YEAR)==year && calendar2.get(Calendar.DAY_OF_MONTH)+2>=dayOfMonth && calendar2.get(Calendar.DAY_OF_MONTH)+7<dayOfMonth) {
+                else if (dateSpecified.compareTo(today) == 1) {
+                    datum = "Sutra";
+                } else if (calendar2.get(Calendar.MONTH) == month && calendar2.get(Calendar.YEAR)==year && calendar2.get(Calendar.DAY_OF_MONTH)+2>=dayOfMonth && calendar2.get(Calendar.DAY_OF_MONTH)+7<dayOfMonth) {
 
                     switch (dayOfMonth) {
                         case Calendar.SUNDAY:
@@ -219,7 +230,19 @@ public class Activity2 extends AppCompatActivity {
 
                 Intent intent =new Intent();
                 intent.putExtra("datum",datum);
-                intent.putExtra("text",text);
+                intent.putExtra("imeZadatkaText",imeZadatkaText);
+                if (redFlag)
+                    intent.putExtra("boja", R.drawable.red);
+                else if (greenFlag)
+                    intent.putExtra("boja", R.drawable.green);
+                else
+                    intent.putExtra("boja", R.drawable.yellow);
+
+                if(podsjetnkikCheckBox.isChecked())
+                {
+                    intent.putExtra("checkBox", android.R.drawable.ic_popup_reminder);
+                }
+
                 setResult(RESULT_OK, intent);
                 finish();
 
@@ -234,8 +257,6 @@ public class Activity2 extends AppCompatActivity {
                 int flag = getIntent().getExtras().getInt("flag");
                 if(flag==1)
                 {
-                    int position = getIntent().getExtras().getInt("position");
-                    intent.putExtra("position", position);
                     setResult(RESULT_FIRST_USER, intent);
                 }
                 else
@@ -264,6 +285,8 @@ public class Activity2 extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable editable) {
+
+            imeZadatkaText = imeZadatka.getText().toString();
             checkFieldsForEmptyValues();
         }
     };

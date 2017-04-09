@@ -77,10 +77,10 @@ import java.util.ArrayList;
 
         Task task = (Task) getItem(position);
         final ViewHolder holder = (ViewHolder) view.getTag();
-        holder.image.setImageDrawable(task.mImage);
+        holder.image.setImageResource(task.mImage);
         holder.text.setText(task.mText);
         holder.date.setText(task.mDate);
-        holder.alarm.setImageDrawable(task.mAlarm);
+        holder.alarm.setImageResource(task.mAlarm);
 
         holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

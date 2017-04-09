@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:longClickable="true">
+    android:longClickable="true"
+    android:background="#ccf9f0">
 
     <ImageView
         android:id="@+id/rowImageView"
@@ -33,34 +33,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="22dp"
-                    android:layout_height="21dp"
-                    android:layout_gravity="start"
-                    android:src="@android:drawable/btn_star"
-                    android:id="@+id/alarm"/>
+            <ImageView
+                android:id="@+id/alarm"
+                android:layout_width="22dp"
+                android:layout_height="21dp"
+                android:layout_gravity="start" />
 
-                <TextView
-                    android:id="@+id/rowTextViewDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-                    android:text="@string/datum"
-                    android:textAlignment="viewEnd"
-                    android:textSize="10sp"/>
-
+            <TextView
+                android:id="@+id/rowTextViewDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:textAlignment="center"
+                android:textSize="12sp" />
 
 
         </LinearLayout>
 
         <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:id="@+id/checkBox"/>
+            android:layout_gravity="end" />
 
     </LinearLayout>
 
