@@ -29,6 +29,11 @@ import java.util.ArrayList;
         notifyDataSetChanged();
     }
 
+    void removeTask (int i){
+        mTasks.remove(i);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mTasks.size();

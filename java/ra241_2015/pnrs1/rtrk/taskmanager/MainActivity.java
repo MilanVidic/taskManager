@@ -1,7 +1,6 @@
 package ra241_2015.pnrs1.rtrk.taskmanager;
 
 import android.content.Intent;
-import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -11,9 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +18,8 @@ public class MainActivity extends AppCompatActivity {
     Button noviZadatak;
     Button statistika;
     Intent myIntent;
-
+    customAdapter adapter;
+    static final int PICK_CONTACT_REQUEST = 1;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         noviZadatak = (Button) findViewById(R.id.noviZadatak);
         statistika = (Button) findViewById(R.id.statistika);
 
-
+         adapter = new customAdapter(this);
 
         noviZadatak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 myIntent = new Intent(MainActivity.this, Activity2.class);
                 myIntent.putExtra("IntentDataDodaj", getString(R.string.dodaj));
                 myIntent.putExtra("IntentDataOtkazi", getString(R.string.otkazi));
-                startActivity(myIntent);
+                startActivityForResult(myIntent, PICK_CONTACT_REQUEST);
             }
         });
 
@@ -56,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        customAdapter adapter = new customAdapter(this);
 
-       ;
 
-        adapter.addTask(new Task(getString(R.string.dodaj), ContextCompat.getDrawable(this, R.drawable.red), getString(R.string.datum), ContextCompat.getDrawable(this,android.R.drawable.btn_star)));
+
+
+
         //adapter.addTask(new Task(getString(R.string.dodaj), ContextCompat.getDrawable(this, R.drawable.green), getString(R.string.datum)));
         //adapter.addTask(new Task(getString(R.string.dodaj), ContextCompat.getDrawable(this, R.drawable.yellow), getString(R.string.datum)));
         //adapter.addTask(new Task(getString(R.string.dodaj), ContextCompat.getDrawable(this, R.drawable.green), getString(R.string.datum)));
@@ -74,15 +72,15 @@ public class MainActivity extends AppCompatActivity {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
-                // TODO Auto-generated method stub
+
 
                 myIntent = new Intent(MainActivity.this, Activity2.class);
                 myIntent.putExtra("IntentDataDodaj", getString(R.string.sacuvaj));
                 myIntent.putExtra("IntentDataOtkazi", getString(R.string.obrisi));
-                startActivity(myIntent);
+                myIntent.putExtra("flag",1);
+                myIntent.putExtra("position", pos);
+                startActivityForResult(myIntent, 2);
 
-
-                Log.v("long clicked","pos: " + pos);
 
                 return true;
             }
@@ -91,5 +89,28 @@ public class MainActivity extends AppCompatActivity {
 
 
     }//onCreate
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == PICK_CONTACT_REQUEST && resultCode == RESULT_OK) {
+
+            if (intent != null) {
+                adapter.addTask(new Task(intent.getStringExtra("text"), ContextCompat.getDrawable(this, R.drawable.red),intent.getStringExtra("datum"), ContextCompat.getDrawable(this,android.R.drawable.btn_star)));
+                adapter.notifyDataSetChanged();
+            }
+
+        }
+        else if (requestCode == 2 && resultCode == RESULT_FIRST_USER)
+        {
+            adapter.removeTask(intent.getExtras().getInt("position"));
+
+        }
+
+    }
+
+
 
 }//mainActivity

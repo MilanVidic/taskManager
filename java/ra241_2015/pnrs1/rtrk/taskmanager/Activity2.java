@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class Activity2 extends AppCompatActivity {
 
@@ -29,9 +30,12 @@ public class Activity2 extends AppCompatActivity {
 
     Boolean flag = false;
 
-    Intent myIntent;
 
     DatePicker datePicker;
+
+    String datum, text;
+    Calendar calendar, calendar2;
+    Date today;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -51,29 +55,17 @@ public class Activity2 extends AppCompatActivity {
         String data = getIntent().getExtras().getString("IntentDataDodaj");
         String data1 = getIntent().getExtras().getString("IntentDataOtkazi");
 
+        text = imeZadatka.getText().toString();
+
+
+        System.out.print(text);
 
         btnDodaj.setText(data);
         btnOtkazi.setText(data1);
 
-        btnOtkazi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                        myIntent = new Intent(Activity2.this, MainActivity.class);
-                        startActivity(myIntent);
 
-            }
-        });
 
-        btnDodaj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                myIntent = new Intent(Activity2.this, MainActivity.class);
-                startActivity(myIntent);
-
-            }
-        });
 
 
         btnGreen.setOnClickListener(new View.OnClickListener() {
@@ -137,19 +129,122 @@ public class Activity2 extends AppCompatActivity {
 
 
 
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
+        calendar2 = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar2.setTimeInMillis(System.currentTimeMillis());
+
+        calendar2.set(Calendar.HOUR_OF_DAY, 0);
+        calendar2.set(Calendar.MINUTE, 0);
+        calendar2.set(Calendar.SECOND, 0);
+        calendar2.set(Calendar.MILLISECOND, 0);
+
+// and get that as a Date
+        today = calendar2.getTime();
         datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
 
             @Override
             public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                String datum = "Year=" + year + " Month=" + (month + 1) + " day=" + dayOfMonth;
-                Log.d("Date", datum);
+
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+
+
+                Date dateSpecified = calendar.getTime();
+
+                Log.d("Milan", "DATUM " + calendar2.get(Calendar.MONTH));
+                Log.d("Milan", "DATUM " + calendar2.get(Calendar.MONTH)+2);
+                Log.d("Milan", "DATUM " + calendar2.get(Calendar.DAY_OF_MONTH)+5+1);
+                Log.d("Milan", "DATUM " + month);
+                Log.d("Milan", "DATUM " + dayOfMonth);
+                Log.d("Milan", "DATUM " + year);
+                if (dateSpecified.equals(today)) {
+                    datum = "Danas";
+                }
+               /* else if (dateSpecified.compareTo(today) == 1) {
+                    datum = "Sutra";*/
+                else if (calendar2.get(Calendar.MONTH) == month && calendar2.get(Calendar.YEAR)==year && calendar2.get(Calendar.DAY_OF_MONTH)+2>=dayOfMonth && calendar2.get(Calendar.DAY_OF_MONTH)+7<dayOfMonth) {
+
+                    switch (dayOfMonth) {
+                        case Calendar.SUNDAY:
+                            datum = "Nedelja";
+
+                        case Calendar.MONDAY:
+                            datum = "ponedeljak";
+
+                        case Calendar.TUESDAY:
+                            datum = "utorak";
+                        case Calendar.WEDNESDAY:
+                            datum = "srijeda";
+                        case Calendar.THURSDAY:
+                            datum = "cetvrtak";
+                        case Calendar.FRIDAY:
+                            datum = "petak";
+                        case Calendar.SATURDAY:
+                            datum = "subota";
+                    }
+
+
+                }else if (dateSpecified.compareTo(today) == 3) {
+                    datum = "BBBB";
+                }
+
 
 
             }
         });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        btnDodaj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent();
+                intent.putExtra("datum",datum);
+                intent.putExtra("text",text);
+                setResult(RESULT_OK, intent);
+                finish();
+
+            }
+        });
+
+
+        btnOtkazi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent();
+                int flag = getIntent().getExtras().getInt("flag");
+                if(flag==1)
+                {
+                    int position = getIntent().getExtras().getInt("position");
+                    intent.putExtra("position", position);
+                    setResult(RESULT_FIRST_USER, intent);
+                }
+                else
+                {
+                    setResult(RESULT_CANCELED, intent);
+                }
+                finish();
+            }
+        });
 
 
 
