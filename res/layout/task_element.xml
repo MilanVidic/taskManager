@@ -21,6 +21,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="5dp"
         android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:text="@string/opis_zadatka"
         android:textSize="16sp">
 

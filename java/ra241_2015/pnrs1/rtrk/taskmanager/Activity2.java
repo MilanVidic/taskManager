@@ -17,26 +17,17 @@ import java.util.Calendar;
 
 public class Activity2 extends AppCompatActivity {
 
-    Button btnRed;
-    Button btnGreen;
-    Button btnYellow;
+    Button btnRed, btnGreen, btnYellow, btnDodaj, btnOtkazi;
 
-    Button btnDodaj;
-    Button btnOtkazi;
+    EditText imeZadatka, opisZadatka;
 
-    EditText imeZadatka;
-    EditText opisZadatka;
-
-    Boolean flag = false;
-    Boolean greenFlag, redFlag, yellowFlag;
-
+    Boolean greenFlag, redFlag, yellowFlag, dodajBtnEnabled = false;
 
     DatePicker datePicker;
 
-    String datum;
-    String imeZadatkaText;
-    Calendar calendar, calendar2;
+    String datum, imeZadatkaText;
 
+    Calendar calendarCurrent, calendarSpecified;
 
     CheckBox podsjetnkikCheckBox;
 
@@ -57,129 +48,155 @@ public class Activity2 extends AppCompatActivity {
 
         podsjetnkikCheckBox = (CheckBox) findViewById(R.id.checkBox2);
 
-        String data = getIntent().getExtras().getString("IntentDataDodaj");
-        String data1 = getIntent().getExtras().getString("IntentDataOtkazi");
-
-
-
-        btnDodaj.setText(data);
-        btnOtkazi.setText(data1);
-
-
-
-
-        btnGreen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                btnGreen.setEnabled(false);
-                btnGreen.setAlpha(.5f);
-                btnRed.setEnabled(true);
-                btnRed.setAlpha(1f);
-                btnYellow.setEnabled(true);
-                btnYellow.setAlpha(1f);
-                flag=true;
-                redFlag = false;
-                greenFlag = true;
-                yellowFlag = false;
-
-                checkFieldsForEmptyValues();
-
-            }
-        });
-
-
-        btnRed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                btnRed.setEnabled(false);
-                btnRed.setAlpha(.5f);
-                btnGreen.setEnabled(true);
-                btnGreen.setAlpha(1f);
-                btnYellow.setEnabled(true);
-                btnYellow.setAlpha(1f);
-                flag=true;
-                redFlag = true;
-                greenFlag = false;
-                yellowFlag = false;
-                checkFieldsForEmptyValues();
-
-            }
-        });
-
-
-        btnYellow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnYellow.setEnabled(false);
-                btnYellow.setAlpha(.5f);
-                btnRed.setEnabled(true);
-                btnRed.setAlpha(1f);
-                btnGreen.setEnabled(true);
-                btnGreen.setAlpha(1f);
-                yellowFlag = true;
-                redFlag = false;
-                greenFlag = false;
-                flag=true;
-                checkFieldsForEmptyValues();
-            }
-        });
-
-
+        datePicker = (DatePicker) findViewById(R.id.datePicker2);
 
 
         checkFieldsForEmptyValues();
 
 
-        datePicker = (DatePicker) findViewById(R.id.datePicker2);
-        datePicker.setMinDate(System.currentTimeMillis());
+        View.OnClickListener ocl = new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+
+                switch (v.getId())
+                {
+                    case R.id.btnGreen:
+
+                        btnGreen.setEnabled(false);
+                        btnGreen.setAlpha(.5f);
+                        btnRed.setEnabled(true);
+                        btnRed.setAlpha(1f);
+                        btnYellow.setEnabled(true);
+                        btnYellow.setAlpha(1f);
+                        dodajBtnEnabled =true;
+                        redFlag = false;
+                        greenFlag = true;
+                        yellowFlag = false;
+
+                        checkFieldsForEmptyValues();
+
+                        break;
+
+                    case R.id.btnRed:
+
+                        btnRed.setEnabled(false);
+                        btnRed.setAlpha(.5f);
+                        btnGreen.setEnabled(true);
+                        btnGreen.setAlpha(1f);
+                        btnYellow.setEnabled(true);
+                        btnYellow.setAlpha(1f);
+                        dodajBtnEnabled =true;
+                        redFlag = true;
+                        greenFlag = false;
+                        yellowFlag = false;
+
+                        checkFieldsForEmptyValues();
+
+                        break;
+
+                    case R.id.btnYellow:
+
+                        btnYellow.setEnabled(false);
+                        btnYellow.setAlpha(.5f);
+                        btnRed.setEnabled(true);
+                        btnRed.setAlpha(1f);
+                        btnGreen.setEnabled(true);
+                        btnGreen.setAlpha(1f);
+                        yellowFlag = true;
+                        redFlag = false;
+                        greenFlag = false;
+                        dodajBtnEnabled =true;
+
+                        checkFieldsForEmptyValues();
+
+                        break;
+
+                    case R.id.btnDodaj:
+
+                        Intent intent = new Intent();
+                        intent.putExtra("datum",datum);
+                        intent.putExtra("imeZadatkaText", imeZadatkaText);
+
+                        if (redFlag)
+                            intent.putExtra("boja", R.drawable.red);
+                        else if (greenFlag)
+                            intent.putExtra("boja", R.drawable.green);
+                        else
+                            intent.putExtra("boja", R.drawable.yellow);
+
+                        if(podsjetnkikCheckBox.isChecked())
+                        {
+                            intent.putExtra("checkBox", android.R.drawable.ic_popup_reminder);
+                        }
+
+                        setResult(RESULT_OK, intent);
+                        finish();
+                        break;
+
+                    case R.id.btnOtkazi:
+
+                        Intent intent1 =new Intent();
+
+                        if(getIntent().getExtras().getInt("flag") == 1)
+                        {
+                            setResult(RESULT_FIRST_USER, intent1);//result_obrisi
+                        }
+                        else
+                        {
+                            setResult(RESULT_CANCELED, intent1);
+                        }
+
+                        finish();
+                        break;
+                }
+            }
+        };
 
 
+        btnGreen.setOnClickListener(ocl);
+        btnRed.setOnClickListener(ocl);
+        btnYellow.setOnClickListener(ocl);
+        btnDodaj.setOnClickListener(ocl);
+        btnOtkazi.setOnClickListener(ocl);
+
+        btnDodaj.setText(getIntent().getExtras().getString("textNaBtnDodajSacuvaj"));
+        btnOtkazi.setText(getIntent().getExtras().getString("textNaBtnOtkaziObrisi"));
+
+        imeZadatka.addTextChangedListener(mTextWatcher);
+        opisZadatka.addTextChangedListener(mTextWatcher);
 
 
-        calendar = Calendar.getInstance();
-        calendar2 = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar2.setTimeInMillis(System.currentTimeMillis());
+        //datePicker.setMinDate(System.currentTimeMillis());
 
-        /*calendar2.set(Calendar.HOUR_OF_DAY, 0);
-        calendar2.set(Calendar.MINUTE, 0);
-        calendar2.set(Calendar.SECOND, 0);
-        calendar2.set(Calendar.MILLISECOND, 0);*/
 
-// and get that as a Date
-        //today = calendar2.getTime();
+        calendarCurrent = Calendar.getInstance();
+        calendarCurrent.setTimeInMillis(System.currentTimeMillis());
 
-        datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+        calendarSpecified = Calendar.getInstance();
+        calendarSpecified.setTimeInMillis(System.currentTimeMillis());
+
+        datum = getString(R.string.danas);
+
+        datePicker.init(calendarCurrent.get(Calendar.YEAR), calendarCurrent.get(Calendar.MONTH), calendarCurrent.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
 
             @Override
             public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
 
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                /*calendar.set(Calendar.HOUR_OF_DAY, 0);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MILLISECOND, 0);*/
+                calendarCurrent.set(Calendar.YEAR, year);
+                calendarCurrent.set(Calendar.MONTH, month);
+                calendarCurrent.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
 
-
-                if(calendar2.get(Calendar.YEAR) == year)
+                if(calendarSpecified.get(Calendar.YEAR) == year)
                 {
-
-                    if(calendar2.get(Calendar.DAY_OF_YEAR)==calendar.get(Calendar.DAY_OF_YEAR))
+                   if ((calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR)) == 1)
                     {
-                        datum = "Danas";
+                        datum = getString(R.string.sutra);
                     }
-                    else if ((calendar.get(Calendar.DAY_OF_YEAR) - calendar2.get(Calendar.DAY_OF_YEAR)) == 1)
+                    else if ((calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR)) >= 3 && (calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR))<7 )
                     {
-                        datum = "Sutra";
-                    }
-                    else if ((calendar.get(Calendar.DAY_OF_YEAR) - calendar2.get(Calendar.DAY_OF_YEAR)) >= 3 && (calendar.get(Calendar.DAY_OF_YEAR) - calendar2.get(Calendar.DAY_OF_YEAR))<7 )
-                    {
-                        switch (calendar.get(Calendar.DAY_OF_WEEK))
+                        switch (calendarCurrent.get(Calendar.DAY_OF_WEEK))
                         {
                             case(Calendar.MONDAY):
                                 datum = getString(R.string.ponedeljak);
@@ -200,80 +217,20 @@ public class Activity2 extends AppCompatActivity {
                                 datum = getString(R.string.subota);
                                 break;
                             case(Calendar.SUNDAY):
-                                datum = getString(R.string.Nedelja);
+                                datum = getString(R.string.nedelja);
                                 break;
-
                         }
                     }
                     else
                     {
                         datum = dayOfMonth + "/" + month + "/" + year;
-
                     }
 
                 }
-
-               /* Log.d("Milan", "DATUM " + calendar2.get(Calendar.MONTH));
-                Log.d("Milan", "DATUM " + calendar2.get(Calendar.MONTH)+2);
-                Log.d("Milan", "DATUM " + calendar2.get(Calendar.DAY_OF_MONTH)+5+1);
-                Log.d("Milan", "DATUM " + month);
-                Log.d("Milan", "DATUM " + dayOfMonth);
-                Log.d("Milan", "DATUM " + year);*/
-
             }
         });
 
-
-
-
-        btnDodaj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent();
-                intent.putExtra("datum",datum);
-                intent.putExtra("imeZadatkaText",imeZadatkaText);
-                if (redFlag)
-                    intent.putExtra("boja", R.drawable.red);
-                else if (greenFlag)
-                    intent.putExtra("boja", R.drawable.green);
-                else
-                    intent.putExtra("boja", R.drawable.yellow);
-
-                if(podsjetnkikCheckBox.isChecked())
-                {
-                    intent.putExtra("checkBox", android.R.drawable.ic_popup_reminder);
-                }
-
-                setResult(RESULT_OK, intent);
-                finish();
-
-            }
-        });
-
-
-        btnOtkazi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent =new Intent();
-                int flag = getIntent().getExtras().getInt("flag");
-                if(flag==1)
-                {
-                    setResult(RESULT_FIRST_USER, intent);
-                }
-                else
-                {
-                    setResult(RESULT_CANCELED, intent);
-                }
-                finish();
-            }
-        });
-
-
-
-        imeZadatka.addTextChangedListener(mTextWatcher);
-        opisZadatka.addTextChangedListener(mTextWatcher);
-    }
+    }//onCreate
 
 
     private TextWatcher mTextWatcher = new TextWatcher() {
@@ -304,9 +261,9 @@ public class Activity2 extends AppCompatActivity {
             btnDodaj.setEnabled(false);
 
         } else {
-            if(flag)
+            if(dodajBtnEnabled)
                 btnDodaj.setEnabled(true);
         }
     }
 
-}
+}//activity

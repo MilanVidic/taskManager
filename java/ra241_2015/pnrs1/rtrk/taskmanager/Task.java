@@ -7,7 +7,8 @@ class Task {
     String mDate;
     int mAlarm;
 
-    Task(String text, int drawable,String date, int alarm) {
+    Task(String text, int drawable, String date, int alarm) {
+
         mText = text;
         mImage = drawable;
         mDate = date;

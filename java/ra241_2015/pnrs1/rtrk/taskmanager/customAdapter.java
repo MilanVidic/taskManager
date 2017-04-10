@@ -74,9 +74,9 @@ class customAdapter extends BaseAdapter{
         }
 
 
-
         Task task = (Task) getItem(position);
         final ViewHolder holder = (ViewHolder) view.getTag();
+
         holder.image.setImageResource(task.mImage);
         holder.text.setText(task.mText);
         holder.date.setText(task.mDate);
@@ -94,11 +94,9 @@ class customAdapter extends BaseAdapter{
             }
         });
 
-
-
-
         return view;
     }
+
 
     private class ViewHolder {
         ImageView image = null;
@@ -107,4 +105,5 @@ class customAdapter extends BaseAdapter{
         CheckBox check = null;
         ImageView alarm = null;
     }
+
 }

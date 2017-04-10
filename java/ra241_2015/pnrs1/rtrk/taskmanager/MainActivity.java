@@ -13,11 +13,12 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity {
 
 
-    Button noviZadatak;
-    Button statistika;
+    Button noviZadatak, statistika;
     Intent myIntent;
     customAdapter adapter;
-    static final int PICK_CONTACT_REQUEST = 1;
+    ListView list;
+    final int SHORT_CLICK_NOVI_ZADATAK = 1;
+    final int LONG_CLICK_NOVI_ZADATAK = 2;
     int position;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -28,47 +29,49 @@ public class MainActivity extends AppCompatActivity {
 
         noviZadatak = (Button) findViewById(R.id.noviZadatak);
         statistika = (Button) findViewById(R.id.statistika);
+        list= (ListView) findViewById(R.id.mainListView);
 
         adapter = new customAdapter(this);
 
-        noviZadatak.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener ocl = new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
 
-                myIntent = new Intent(MainActivity.this, Activity2.class);
-                myIntent.putExtra("IntentDataDodaj", getString(R.string.dodaj));
-                myIntent.putExtra("IntentDataOtkazi", getString(R.string.otkazi));
-                startActivityForResult(myIntent, PICK_CONTACT_REQUEST);
+                switch (v.getId())
+                {
+                    case R.id.noviZadatak:
+
+                            myIntent = new Intent(MainActivity.this, Activity2.class);
+                            myIntent.putExtra("textNaBtnDodajSacuvaj", getString(R.string.dodaj));
+                            myIntent.putExtra("textNaBtnOtkaziObrisi", getString(R.string.otkazi));
+                            startActivityForResult(myIntent, SHORT_CLICK_NOVI_ZADATAK);
+                            break;
+
+                    case R.id.statistika:
+
+                            myIntent = new Intent(MainActivity.this, Activity3.class);
+                            startActivity(myIntent);
+                            break;
+                }
             }
-        });
+        };
 
+        noviZadatak.setOnClickListener(ocl);
+        statistika.setOnClickListener(ocl);
 
-        statistika.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                myIntent = new Intent(MainActivity.this, Activity3.class);
-                startActivity(myIntent);
-            }
-        });
-
-
-
-        ListView list = (ListView) findViewById(R.id.mainListView);
         list.setAdapter(adapter);
 
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
 
-
                 myIntent = new Intent(MainActivity.this, Activity2.class);
-                myIntent.putExtra("IntentDataDodaj", getString(R.string.sacuvaj));
-                myIntent.putExtra("IntentDataOtkazi", getString(R.string.obrisi));
-                myIntent.putExtra("flag",1);
+                myIntent.putExtra("textNaBtnDodajSacuvaj", getString(R.string.sacuvaj));
+                myIntent.putExtra("textNaBtnOtkaziObrisi", getString(R.string.obrisi));
+                myIntent.putExtra("flag", 1); //ako je dodajBtnEnabled 1, btn otkazi postaje obrisi
                 position = pos;
-                startActivityForResult(myIntent, 2);
-
+                startActivityForResult(myIntent, LONG_CLICK_NOVI_ZADATAK);
 
                 return true;
             }
@@ -83,22 +86,19 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == PICK_CONTACT_REQUEST && resultCode == RESULT_OK) {
-
-            if (intent != null) {
+        if (requestCode == SHORT_CLICK_NOVI_ZADATAK && resultCode == RESULT_OK)
+        {
+            if (intent != null)
+            {
                 adapter.addTask(new Task(intent.getStringExtra("imeZadatkaText"), intent.getExtras().getInt("boja"),intent.getStringExtra("datum"), intent.getExtras().getInt("checkBox")));
                 adapter.notifyDataSetChanged();
             }
-
         }
-        else if (requestCode == 2 && resultCode == RESULT_FIRST_USER)
+        else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == RESULT_FIRST_USER)//result_obrisi
         {
             adapter.removeTask(position);
-
         }
 
     }
-
-
 
 }//mainActivity

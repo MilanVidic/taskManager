@@ -19,6 +19,8 @@
     <string name="cetvrtak">Четвртак</string>
     <string name="petak">Петак</string>
     <string name="subota">Субота</string>
-    <string name="Nedelja">Недеља</string>
+    <string name="nedelja">Недеља</string>
+    <string name="sutra">Сутра</string>
+    <string name="danas">Данас</string>
 
 </resources>
