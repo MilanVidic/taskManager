@@ -11,112 +11,112 @@
     android:orientation="vertical"
     tools:context="ra241_2015.pnrs1.rtrk.taskmanager.Activity2">
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/scrollView">
+            android:orientation="vertical">
 
             <LinearLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                 <LinearLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:orientation="vertical">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:hint="@string/ime_zadatka"
+                    android:id="@+id/imeZadatka" />
 
-                     <EditText
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:inputType="textPersonName"
-                         android:hint="@string/ime_zadatka"
-                         android:id="@+id/imeZadatka" />
+                <TimePicker
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/timePicker2" />
 
-                     <TimePicker
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:id="@+id/timePicker2" />
+                <DatePicker
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/datePicker2" />
 
-                     <DatePicker
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:id="@+id/datePicker2" />
-
-                     <EditText
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:inputType="textMultiLine"
-                         android:hint="@string/opis_zadatka"
-                         android:id="@+id/opisZadatka"
-                         android:lines="5"
-                         android:scrollbars="vertical"/>
-                 </LinearLayout>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/opis_zadatka"
+                    android:id="@+id/opisZadatka"
+                    android:lines="5"
+                    android:scrollbars="vertical"/>
+            </LinearLayout>
 
 
-                 <CheckBox
-                     android:text="@string/podsjeti_me_15_min_prije_isteka"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:id="@+id/checkBox2"
-                     android:layout_marginBottom="15dp" />
+            <CheckBox
+                android:text="@string/podsjeti_me_15_min_prije_isteka"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox2"
+                android:layout_marginBottom="15dp" />
 
 
-                 <LinearLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:orientation="horizontal"
-                     android:id="@+id/bojeBtn">
-                     <Button
-                         android:background="@color/crvena"
-                         android:layout_width="0dp"
-                         android:layout_weight="1"
-                         android:layout_height="wrap_content"
-                         android:hint="@string/visok"
-                         android:id="@+id/btnRed" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/bojeBtn">
+                <Button
+                    android:background="@color/crvena"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/visok"
+                    android:id="@+id/btnRed" />
 
-                     <Button
-                         android:background="@color/zuta"
-                         android:layout_width="0dp"
-                         android:layout_weight="1"
-                         android:layout_height="wrap_content"
-                         android:hint="@string/srednji"
-                         android:id="@+id/btnYellow" />
+                <Button
+                    android:background="@color/zuta"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/srednji"
+                    android:id="@+id/btnYellow" />
 
-                     <Button
-                         android:background="@color/zelena"
-                         android:layout_width="0dp"
-                         android:layout_weight="1"
-                         android:layout_height="wrap_content"
-                         android:hint="@string/nizak"
-                         android:id="@+id/btnGreen" />
-                 </LinearLayout>
+                <Button
+                    android:background="@color/zelena"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nizak"
+                    android:id="@+id/btnGreen" />
+            </LinearLayout>
 
-                 <LinearLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:orientation="horizontal"
-                     android:id="@+id/dodajOtkazi">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/dodajOtkazi">
 
 
-                     <Button
-                         android:text="@string/dodaj"
-                         android:layout_width="0dp"
-                         android:layout_weight="1"
-                         android:layout_height="wrap_content"
-                         android:id="@+id/btnDodaj" />
+                <Button
+                    android:text="@string/dodaj"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnDodaj" />
 
-                     <Button
-                         android:text="@string/otkazi"
-                         android:layout_width="0dp"
-                         android:layout_height="wrap_content"
-                         android:layout_weight="1"
-                         android:id="@+id/btnOtkazi" />
+                <Button
+                    android:text="@string/otkazi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/btnOtkazi" />
 
-                 </LinearLayout>
+            </LinearLayout>
 
-             </LinearLayout>
+        </LinearLayout>
 
-        </ScrollView>
+    </ScrollView>
 
-    </RelativeLayout>
+</RelativeLayout>

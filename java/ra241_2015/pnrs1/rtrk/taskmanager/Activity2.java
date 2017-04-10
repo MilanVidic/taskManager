@@ -10,12 +10,10 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class Activity2 extends AppCompatActivity {
 
@@ -38,7 +36,7 @@ public class Activity2 extends AppCompatActivity {
     String datum;
     String imeZadatkaText;
     Calendar calendar, calendar2;
-    Date today;
+
 
     CheckBox podsjetnkikCheckBox;
 
@@ -135,7 +133,7 @@ public class Activity2 extends AppCompatActivity {
 
 
         datePicker = (DatePicker) findViewById(R.id.datePicker2);
-       // datePicker.setMinDate(System.currentTimeMillis());
+        datePicker.setMinDate(System.currentTimeMillis());
 
 
 
@@ -145,13 +143,14 @@ public class Activity2 extends AppCompatActivity {
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar2.setTimeInMillis(System.currentTimeMillis());
 
-        calendar2.set(Calendar.HOUR_OF_DAY, 0);
+        /*calendar2.set(Calendar.HOUR_OF_DAY, 0);
         calendar2.set(Calendar.MINUTE, 0);
         calendar2.set(Calendar.SECOND, 0);
-        calendar2.set(Calendar.MILLISECOND, 0);
+        calendar2.set(Calendar.MILLISECOND, 0);*/
 
 // and get that as a Date
-        today = calendar2.getTime();
+        //today = calendar2.getTime();
+
         datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
 
             @Override
@@ -160,13 +159,59 @@ public class Activity2 extends AppCompatActivity {
                 calendar.set(Calendar.YEAR, year);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                /*calendar.set(Calendar.HOUR_OF_DAY, 0);
                 calendar.set(Calendar.MINUTE, 0);
                 calendar.set(Calendar.SECOND, 0);
-                calendar.set(Calendar.MILLISECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);*/
 
 
-                Date dateSpecified = calendar.getTime();
+
+                if(calendar2.get(Calendar.YEAR) == year)
+                {
+
+                    if(calendar2.get(Calendar.DAY_OF_YEAR)==calendar.get(Calendar.DAY_OF_YEAR))
+                    {
+                        datum = "Danas";
+                    }
+                    else if ((calendar.get(Calendar.DAY_OF_YEAR) - calendar2.get(Calendar.DAY_OF_YEAR)) == 1)
+                    {
+                        datum = "Sutra";
+                    }
+                    else if ((calendar.get(Calendar.DAY_OF_YEAR) - calendar2.get(Calendar.DAY_OF_YEAR)) >= 3 && (calendar.get(Calendar.DAY_OF_YEAR) - calendar2.get(Calendar.DAY_OF_YEAR))<7 )
+                    {
+                        switch (calendar.get(Calendar.DAY_OF_WEEK))
+                        {
+                            case(Calendar.MONDAY):
+                                datum = getString(R.string.ponedeljak);
+                                break;
+                            case(Calendar.TUESDAY):
+                                datum = getString(R.string.utorak);
+                                break;
+                            case(Calendar.WEDNESDAY):
+                                datum = getString(R.string.srijeda);
+                                break;
+                            case(Calendar.THURSDAY):
+                                datum = getString(R.string.cetvrtak);
+                                break;
+                            case(Calendar.FRIDAY):
+                                datum = getString(R.string.petak);
+                                break;
+                            case(Calendar.SATURDAY):
+                                datum = getString(R.string.subota);
+                                break;
+                            case(Calendar.SUNDAY):
+                                datum = getString(R.string.Nedelja);
+                                break;
+
+                        }
+                    }
+                    else
+                    {
+                        datum = dayOfMonth + "/" + month + "/" + year;
+
+                    }
+
+                }
 
                /* Log.d("Milan", "DATUM " + calendar2.get(Calendar.MONTH));
                 Log.d("Milan", "DATUM " + calendar2.get(Calendar.MONTH)+2);
@@ -174,52 +219,9 @@ public class Activity2 extends AppCompatActivity {
                 Log.d("Milan", "DATUM " + month);
                 Log.d("Milan", "DATUM " + dayOfMonth);
                 Log.d("Milan", "DATUM " + year);*/
-                if (dateSpecified.equals(today)) {
-                    datum = "Danas";
-                }
-                else if (dateSpecified.compareTo(today) == 1) {
-                    datum = "Sutra";
-                } else if (calendar2.get(Calendar.MONTH) == month && calendar2.get(Calendar.YEAR)==year && calendar2.get(Calendar.DAY_OF_MONTH)+2>=dayOfMonth && calendar2.get(Calendar.DAY_OF_MONTH)+7<dayOfMonth) {
-
-                    switch (dayOfMonth) {
-                        case Calendar.SUNDAY:
-                            datum = "Nedelja";
-
-                        case Calendar.MONDAY:
-                            datum = "ponedeljak";
-
-                        case Calendar.TUESDAY:
-                            datum = "utorak";
-                        case Calendar.WEDNESDAY:
-                            datum = "srijeda";
-                        case Calendar.THURSDAY:
-                            datum = "cetvrtak";
-                        case Calendar.FRIDAY:
-                            datum = "petak";
-                        case Calendar.SATURDAY:
-                            datum = "subota";
-                    }
-
-
-                }else if (dateSpecified.compareTo(today) == 3) {
-                    datum = "BBBB";
-                }
-
-
 
             }
         });
-
-
-
-
-
-
-
-
-
-
-
 
 
 

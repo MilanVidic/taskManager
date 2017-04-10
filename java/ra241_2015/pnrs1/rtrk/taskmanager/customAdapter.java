@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-    class customAdapter extends BaseAdapter{
+class customAdapter extends BaseAdapter{
 
     private Context mContext;
     private ArrayList<Task> mTasks;

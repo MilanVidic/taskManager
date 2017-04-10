@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         noviZadatak = (Button) findViewById(R.id.noviZadatak);
         statistika = (Button) findViewById(R.id.statistika);
 
-         adapter = new customAdapter(this);
+        adapter = new customAdapter(this);
 
         noviZadatak.setOnClickListener(new View.OnClickListener() {
             @Override
