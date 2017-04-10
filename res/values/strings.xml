@@ -13,12 +13,12 @@
     <string name="otkazi">Откажи</string>
     <string name="sacuvaj">Сачувај</string>
     <string name="obrisi">Обриши</string>
-    <string name="ponedeljak">Ponedeljak</string>
-    <string name="utorak">Utorak</string>
-    <string name="srijeda">Srijeda</string>
-    <string name="cetvrtak">Cetvrtak</string>
-    <string name="petak">Petak</string>
-    <string name="subota">Subota</string>
+    <string name="ponedeljak">Понедељак</string>
+    <string name="utorak">Уторак</string>
+    <string name="srijeda">Сриједа</string>
+    <string name="cetvrtak">Четвртак</string>
+    <string name="petak">Петак</string>
+    <string name="subota">Субота</string>
     <string name="Nedelja">Недеља</string>
 
 </resources>
