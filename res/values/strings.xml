@@ -22,5 +22,8 @@
     <string name="nedelja">Недеља</string>
     <string name="sutra">Сутра</string>
     <string name="danas">Данас</string>
+    <string name="vrijeme">Вријеме</string>
+    <string name="datum">Датум</string>
+    <string name="prekosutra">Прекосутра</string>
 
 </resources>

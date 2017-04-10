@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#0060b4</color>
     <color name="crvena">#fa0000</color>
     <color name="zuta">#feff00</color>
     <color name="zelena">#46f700</color>

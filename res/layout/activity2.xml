@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -27,99 +27,135 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/imeZadatka"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:hint="@string/ime_zadatka"
-                    android:id="@+id/imeZadatka" />
+                    android:inputType="textPersonName"
+                    android:textSize="20sp" />
 
-                <TimePicker
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/timePicker2" />
+                <!--  <TimePicker
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/timePicker2" />
 
-                <DatePicker
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/datePicker2" />
+                  <DatePicker
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/datePicker2" />
+                -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="10dp">
+
+                        <TextView
+                            android:id="@+id/datumTextView"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/border"
+                            android:hint="@string/datum"
+                            android:textAlignment="center"
+                            android:textSize="20sp"
+                            android:layout_marginRight="2dp"/>
+
+                        <TextView
+                            android:id="@+id/vrijemeTextView"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/border"
+                            android:hint="@string/vrijeme"
+                            android:textAlignment="center"
+                            android:textSize="20sp"
+                            android:layout_marginLeft="2dp"/>
+
+
+                    </LinearLayout>
+
 
                 <EditText
+                    android:id="@+id/opisZadatka"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
                     android:hint="@string/opis_zadatka"
-                    android:id="@+id/opisZadatka"
-                    android:lines="5"
-                    android:scrollbars="vertical"/>
+                    android:inputType="textMultiLine"
+                    android:lines="9"
+                    android:scrollbars="vertical"
+                    android:textAlignment="center"
+                    android:background="@drawable/border"/>
             </LinearLayout>
 
 
-            <CheckBox
-                android:text="@string/podsjeti_me_15_min_prije_isteka"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/checkBox2"
-                android:layout_marginBottom="15dp" />
+              <CheckBox
+                  android:text="@string/podsjeti_me_15_min_prije_isteka"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/checkBox2"
+                  android:layout_marginBottom="15dp" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/bojeBtn">
-                <Button
-                    android:background="@drawable/red_button"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/visok"
-                    android:id="@+id/btnRed"
-                    style="@style/button_text"/>
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:id="@+id/bojeBtn">
+                  <Button
+                      android:background="@drawable/red_button"
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/visok"
+                      android:id="@+id/btnRed"
+                      style="@style/button_text"/>
 
-                <Button
-                    android:background="@drawable/yellow_button"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/srednji"
-                    android:id="@+id/btnYellow"
-                    style="@style/button_text"/>
+                  <Button
+                      android:background="@drawable/yellow_button"
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/srednji"
+                      android:id="@+id/btnYellow"
+                      style="@style/button_text"/>
 
-                <Button
-                    android:background="@drawable/green_button"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/nizak"
-                    android:id="@+id/btnGreen"
-                    style="@style/button_text"/>
-            </LinearLayout>
+                  <Button
+                      android:background="@drawable/green_button"
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/nizak"
+                      android:id="@+id/btnGreen"
+                      style="@style/button_text"/>
+              </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/dodajOtkazi">
+              <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:id="@+id/dodajOtkazi">
 
 
-                <Button
-                    android:text="@string/dodaj"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnDodaj" />
+                  <Button
+                      android:text="@string/dodaj"
+                      android:layout_width="0dp"
+                      android:layout_weight="1"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/btnDodaj" />
 
-                <Button
-                    android:text="@string/otkazi"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/btnOtkazi" />
+                  <Button
+                      android:text="@string/otkazi"
+                      android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:id="@+id/btnOtkazi" />
 
-            </LinearLayout>
+              </LinearLayout>
 
-        </LinearLayout>
+          </LinearLayout>
 
-    </ScrollView>
+      </ScrollView>
 
-</RelativeLayout>
+  </RelativeLayout>

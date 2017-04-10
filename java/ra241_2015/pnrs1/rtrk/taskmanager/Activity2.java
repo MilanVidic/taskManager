@@ -1,5 +1,8 @@
 package ra241_2015.pnrs1.rtrk.taskmanager;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,10 +15,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
 
 public class Activity2 extends AppCompatActivity {
+
+
 
     Button btnRed, btnGreen, btnYellow, btnDodaj, btnOtkazi;
 
@@ -23,13 +30,28 @@ public class Activity2 extends AppCompatActivity {
 
     Boolean greenFlag, redFlag, yellowFlag, dodajBtnEnabled = false;
 
-    DatePicker datePicker;
+    //DatePicker datePicker;
+
+    /*Date picker*/
+    protected DatePickerDialog.OnDateSetListener Date;
+    protected DatePickerDialog DatePicker;
+
+    /*Time picker*/
+    protected TimePickerDialog.OnTimeSetListener Time;
+    protected TimePickerDialog TimePicker;
 
     String datum, imeZadatkaText;
+
+    protected String mDateString;
+    protected String mTimeString;
+
 
     Calendar calendarCurrent, calendarSpecified;
 
     CheckBox podsjetnkikCheckBox;
+
+    TextView mSetDate;
+    TextView mSetTime;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -48,7 +70,9 @@ public class Activity2 extends AppCompatActivity {
 
         podsjetnkikCheckBox = (CheckBox) findViewById(R.id.checkBox2);
 
-        datePicker = (DatePicker) findViewById(R.id.datePicker2);
+
+        SetDate = (TextView) findViewById(R.id.datumTextView);
+        SetTime = (TextView) findViewById(R.id.vrijemeTextView);
 
 
         checkFieldsForEmptyValues();
@@ -178,21 +202,28 @@ public class Activity2 extends AppCompatActivity {
 
         datum = getString(R.string.danas);
 
-        datePicker.init(calendarCurrent.get(Calendar.YEAR), calendarCurrent.get(Calendar.MONTH), calendarCurrent.get(Calendar.DAY_OF_MONTH), new DatePicker.OnDateChangedListener() {
+
+
+        Date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
-            public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
                 calendarCurrent.set(Calendar.YEAR, year);
-                calendarCurrent.set(Calendar.MONTH, month);
+                calendarCurrent.set(Calendar.MONTH, monthOfYear);
                 calendarCurrent.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
+                int month = monthOfYear + 1;
 
                 if(calendarSpecified.get(Calendar.YEAR) == year)
                 {
-                   if ((calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR)) == 1)
+                    if ((calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR)) == 1)
                     {
                         datum = getString(R.string.sutra);
+                    }
+                    else if ((calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR)) == 2)
+                    {
+                        datum = getString(R.string.prekosutra);
                     }
                     else if ((calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR)) >= 3 && (calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR))<7 )
                     {
@@ -223,12 +254,117 @@ public class Activity2 extends AppCompatActivity {
                     }
                     else
                     {
+
                         datum = dayOfMonth + "/" + month + "/" + year;
                     }
 
                 }
+                else
+                {
+                    datum = dayOfMonth + "/" + month + "/" + year;
+                }
+
+
+            }
+        };
+
+
+        DatePicker = new DatePickerDialog(this, Date,
+                calendarCurrent.get(Calendar.YEAR), calendarCurrent.get(Calendar.MONTH),
+                calendarCurrent.get(Calendar.DAY_OF_MONTH));
+
+
+
+        SetDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //mDatePicker.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+
+                DatePicker.show();
             }
         });
+
+
+        DatePicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                int mDayOfMonth = DatePicker.getDatePicker().getDayOfMonth();
+                int mMonth = DatePicker.getDatePicker().getMonth()+1;
+                int mYear = DatePicker.getDatePicker().getYear();
+                String mDateYear = Integer.toString(mYear);
+                String mDateMonth = Integer.toString(mMonth);
+                String mDateDay = Integer.toString(mDayOfMonth);
+
+                if(mDayOfMonth < 10)
+                {
+                    mDateDay = "0" + mDayOfMonth;
+                }
+                if(mMonth < 10)
+                {
+                    mDateMonth = "0" + mMonth;
+                }
+                mDateString = mDateDay + "-" + mDateMonth + "-" + mDateYear;
+
+                mSetDate.setText(mDateString);
+            }
+        });
+
+
+
+
+        Time = new TimePickerDialog.OnTimeSetListener()
+        {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute)
+            {
+                calendarCurrent.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendarCurrent.set(Calendar.MINUTE, minute);
+            }
+        };
+
+        TimePicker = new TimePickerDialog(this, Time,
+                calendarCurrent.get(Calendar.HOUR_OF_DAY), calendarCurrent.get(Calendar.MINUTE),
+                true);
+
+
+        SetTime.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                TimePicker.show();
+            }
+        });
+
+
+
+        TimePicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+
+                int mHour = calendarCurrent.get(Calendar.HOUR_OF_DAY);
+                int mMinute = calendarCurrent.get(Calendar.MINUTE);
+
+                String mHourS = Integer.toString(mHour);
+                String mMinuteS = Integer.toString(mMinute);
+                if(mHour < 10)
+                {
+                    mHourS = "0" + mHourS;
+                }
+                if(mMinute < 10)
+                {
+                    mMinuteS = "0" + mMinuteS;
+                }
+                mTimeString = mHourS + ":" + mMinuteS;
+                /*Show picked time on button*/
+
+                mSetTime.setText(mTimeString);
+            }
+        });
+
+
 
     }//onCreate
 
