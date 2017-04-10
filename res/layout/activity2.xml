@@ -68,28 +68,31 @@
                 android:orientation="horizontal"
                 android:id="@+id/bojeBtn">
                 <Button
-                    android:background="@color/crvena"
+                    android:background="@drawable/red_button"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:hint="@string/visok"
-                    android:id="@+id/btnRed" />
+                    android:id="@+id/btnRed"
+                    style="@style/button_text"/>
 
                 <Button
-                    android:background="@color/zuta"
+                    android:background="@drawable/yellow_button"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:hint="@string/srednji"
-                    android:id="@+id/btnYellow" />
+                    android:id="@+id/btnYellow"
+                    style="@style/button_text"/>
 
                 <Button
-                    android:background="@color/zelena"
+                    android:background="@drawable/green_button"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:hint="@string/nizak"
-                    android:id="@+id/btnGreen" />
+                    android:id="@+id/btnGreen"
+                    style="@style/button_text"/>
             </LinearLayout>
 
             <LinearLayout

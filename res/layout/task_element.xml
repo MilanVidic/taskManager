@@ -43,14 +43,16 @@
                 android:id="@+id/alarm"
                 android:layout_width="22dp"
                 android:layout_height="21dp"
+                android:paddingTop="3dp"
                 android:layout_gravity="start" />
 
             <TextView
                 android:id="@+id/rowTextViewDate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="end"
                 android:textAlignment="center"
+                android:gravity="center_vertical"
+                android:paddingTop="3dp"
                 android:textSize="12sp" />
 
 

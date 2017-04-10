@@ -64,7 +64,7 @@ public class Activity2 extends AppCompatActivity {
                     case R.id.btnGreen:
 
                         btnGreen.setEnabled(false);
-                        btnGreen.setAlpha(.5f);
+                        btnGreen.setAlpha(.25f);
                         btnRed.setEnabled(true);
                         btnRed.setAlpha(1f);
                         btnYellow.setEnabled(true);
@@ -81,7 +81,7 @@ public class Activity2 extends AppCompatActivity {
                     case R.id.btnRed:
 
                         btnRed.setEnabled(false);
-                        btnRed.setAlpha(.5f);
+                        btnRed.setAlpha(.25f);
                         btnGreen.setEnabled(true);
                         btnGreen.setAlpha(1f);
                         btnYellow.setEnabled(true);
@@ -98,7 +98,7 @@ public class Activity2 extends AppCompatActivity {
                     case R.id.btnYellow:
 
                         btnYellow.setEnabled(false);
-                        btnYellow.setAlpha(.5f);
+                        btnYellow.setAlpha(.25f);
                         btnRed.setEnabled(true);
                         btnRed.setAlpha(1f);
                         btnGreen.setEnabled(true);
@@ -127,7 +127,7 @@ public class Activity2 extends AppCompatActivity {
 
                         if(podsjetnkikCheckBox.isChecked())
                         {
-                            intent.putExtra("checkBox", android.R.drawable.ic_popup_reminder);
+                            intent.putExtra("checkBox", R.drawable.yellow_bell);
                         }
 
                         setResult(RESULT_OK, intent);
