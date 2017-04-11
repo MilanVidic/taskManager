@@ -30,28 +30,24 @@ public class Activity2 extends AppCompatActivity {
 
     Boolean greenFlag, redFlag, yellowFlag, dodajBtnEnabled = false;
 
-    //DatePicker datePicker;
 
-    /*Date picker*/
-    protected DatePickerDialog.OnDateSetListener Date;
-    protected DatePickerDialog DatePicker;
 
-    /*Time picker*/
-    protected TimePickerDialog.OnTimeSetListener Time;
-    protected TimePickerDialog TimePicker;
+
+    DatePickerDialog DatePicker;
+    TimePickerDialog TimePicker;
 
     String datum, imeZadatkaText;
 
-    protected String mDateString;
-    protected String mTimeString;
+    protected String DateString;
+    protected String TimeString;
 
 
     Calendar calendarCurrent, calendarSpecified;
 
     CheckBox podsjetnkikCheckBox;
 
-    TextView mSetDate;
-    TextView mSetTime;
+    TextView Datum;
+    TextView Vrijeme;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -71,8 +67,8 @@ public class Activity2 extends AppCompatActivity {
         podsjetnkikCheckBox = (CheckBox) findViewById(R.id.checkBox2);
 
 
-        SetDate = (TextView) findViewById(R.id.datumTextView);
-        SetTime = (TextView) findViewById(R.id.vrijemeTextView);
+        Datum = (TextView) findViewById(R.id.datumTextView);
+        Vrijeme = (TextView) findViewById(R.id.vrijemeTextView);
 
 
         checkFieldsForEmptyValues();
@@ -173,9 +169,27 @@ public class Activity2 extends AppCompatActivity {
 
                         finish();
                         break;
+
+                    case R.id.datumTextView:
+
+                        //mDatePicker.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+                        DatePicker.show();
+
+                        break;
+                    case R.id.vrijemeTextView:
+
+                        TimePicker.show();
+
+                        break;
                 }
             }
         };
+
+
+
+
+
+
 
 
         btnGreen.setOnClickListener(ocl);
@@ -183,6 +197,8 @@ public class Activity2 extends AppCompatActivity {
         btnYellow.setOnClickListener(ocl);
         btnDodaj.setOnClickListener(ocl);
         btnOtkazi.setOnClickListener(ocl);
+        Datum.setOnClickListener(ocl);
+        Vrijeme.setOnClickListener(ocl);
 
         btnDodaj.setText(getIntent().getExtras().getString("textNaBtnDodajSacuvaj"));
         btnOtkazi.setText(getIntent().getExtras().getString("textNaBtnOtkaziObrisi"));
@@ -190,8 +206,6 @@ public class Activity2 extends AppCompatActivity {
         imeZadatka.addTextChangedListener(mTextWatcher);
         opisZadatka.addTextChangedListener(mTextWatcher);
 
-
-        //datePicker.setMinDate(System.currentTimeMillis());
 
 
         calendarCurrent = Calendar.getInstance();
@@ -203,12 +217,13 @@ public class Activity2 extends AppCompatActivity {
         datum = getString(R.string.danas);
 
 
-
-        Date = new DatePickerDialog.OnDateSetListener() {
+        DatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener()
+        {
 
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+            {
+
                 calendarCurrent.set(Calendar.YEAR, year);
                 calendarCurrent.set(Calendar.MONTH, monthOfYear);
                 calendarCurrent.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -263,57 +278,41 @@ public class Activity2 extends AppCompatActivity {
                 {
                     datum = dayOfMonth + "/" + month + "/" + year;
                 }
-
-
             }
-        };
 
+        }, calendarCurrent.get(Calendar.YEAR), calendarCurrent.get(Calendar.MONTH), calendarCurrent.get(Calendar.DAY_OF_MONTH));
 
-        DatePicker = new DatePickerDialog(this, Date,
-                calendarCurrent.get(Calendar.YEAR), calendarCurrent.get(Calendar.MONTH),
-                calendarCurrent.get(Calendar.DAY_OF_MONTH));
-
-
-
-        SetDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //mDatePicker.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
-
-                DatePicker.show();
-            }
-        });
 
 
         DatePicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                int mDayOfMonth = DatePicker.getDatePicker().getDayOfMonth();
-                int mMonth = DatePicker.getDatePicker().getMonth()+1;
-                int mYear = DatePicker.getDatePicker().getYear();
-                String mDateYear = Integer.toString(mYear);
-                String mDateMonth = Integer.toString(mMonth);
-                String mDateDay = Integer.toString(mDayOfMonth);
+                int DayOfMonth = DatePicker.getDatePicker().getDayOfMonth();
+                int Month = DatePicker.getDatePicker().getMonth()+1;
+                int Year = DatePicker.getDatePicker().getYear();
 
-                if(mDayOfMonth < 10)
-                {
-                    mDateDay = "0" + mDayOfMonth;
-                }
-                if(mMonth < 10)
-                {
-                    mDateMonth = "0" + mMonth;
-                }
-                mDateString = mDateDay + "-" + mDateMonth + "-" + mDateYear;
+                String dan = Integer.toString(DayOfMonth);
+                String mjesec = Integer.toString(Month);
+                String godina = Integer.toString(Year);
 
-                mSetDate.setText(mDateString);
+                if(DayOfMonth < 10)
+                {
+                    dan = "0" + dan;
+                }
+                if(Month < 10)
+                {
+                    mjesec = "0" + mjesec;
+                }
+                DateString = dan + "/" + mjesec + "/" + godina;
+
+                Datum.setText(DateString);
             }
         });
 
 
 
 
-        Time = new TimePickerDialog.OnTimeSetListener()
+        TimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener()
         {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute)
@@ -321,46 +320,30 @@ public class Activity2 extends AppCompatActivity {
                 calendarCurrent.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 calendarCurrent.set(Calendar.MINUTE, minute);
             }
-        };
-
-        TimePicker = new TimePickerDialog(this, Time,
-                calendarCurrent.get(Calendar.HOUR_OF_DAY), calendarCurrent.get(Calendar.MINUTE),
-                true);
-
-
-        SetTime.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-
-                TimePicker.show();
-            }
-        });
-
+        }, calendarCurrent.get(Calendar.HOUR_OF_DAY), calendarCurrent.get(Calendar.MINUTE), true);
 
 
         TimePicker.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
 
-                int mHour = calendarCurrent.get(Calendar.HOUR_OF_DAY);
-                int mMinute = calendarCurrent.get(Calendar.MINUTE);
+                int Hour = calendarCurrent.get(Calendar.HOUR_OF_DAY);
+                int Minute = calendarCurrent.get(Calendar.MINUTE);
 
-                String mHourS = Integer.toString(mHour);
-                String mMinuteS = Integer.toString(mMinute);
-                if(mHour < 10)
-                {
-                    mHourS = "0" + mHourS;
-                }
-                if(mMinute < 10)
-                {
-                    mMinuteS = "0" + mMinuteS;
-                }
-                mTimeString = mHourS + ":" + mMinuteS;
-                /*Show picked time on button*/
+                String sat = Integer.toString(Hour);
+                String minut = Integer.toString(Minute);
 
-                mSetTime.setText(mTimeString);
+                if(Hour < 10)
+                {
+                    sat = "0" + sat;
+                }
+                if(Minute < 10)
+                {
+                    minut = "0" + minut;
+                }
+                TimeString = sat + ":" + minut;
+
+                Vrijeme.setText(TimeString);
             }
         });
 

@@ -19,9 +19,10 @@
         android:layout_height="match_parent"
         android:layout_weight="0.5"
         android:gravity="center_vertical"
-        android:paddingLeft="5dp"
-        android:paddingStart="5dp"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
         android:paddingEnd="5dp"
+        android:paddingRight="5dp"
         android:text="@string/opis_zadatka"
         android:textSize="16sp">
 
@@ -30,7 +31,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1"
+        android:layout_weight="0.15"
         android:orientation="vertical">
 
         <LinearLayout
