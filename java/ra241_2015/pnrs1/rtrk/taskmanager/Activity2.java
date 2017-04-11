@@ -224,25 +224,29 @@ public class Activity2 extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
             {
 
-                calendarCurrent.set(Calendar.YEAR, year);
-                calendarCurrent.set(Calendar.MONTH, monthOfYear);
-                calendarCurrent.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                calendarSpecified.set(Calendar.YEAR, year);
+                calendarSpecified.set(Calendar.MONTH, monthOfYear);
+                calendarSpecified.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 int month = monthOfYear + 1;
 
                 if(calendarSpecified.get(Calendar.YEAR) == year)
                 {
-                    if ((calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR)) == 1)
+                    if ((calendarSpecified.get(Calendar.DAY_OF_YEAR) - calendarCurrent.get(Calendar.DAY_OF_YEAR)) == 0)
+                    {
+                        datum = getString(R.string.danas);
+                    }
+                    else if ((calendarSpecified.get(Calendar.DAY_OF_YEAR) - calendarCurrent.get(Calendar.DAY_OF_YEAR)) == 1)
                     {
                         datum = getString(R.string.sutra);
                     }
-                    else if ((calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR)) == 2)
+                    else if ((calendarSpecified.get(Calendar.DAY_OF_YEAR) - calendarCurrent.get(Calendar.DAY_OF_YEAR)) == 2)
                     {
                         datum = getString(R.string.prekosutra);
                     }
-                    else if ((calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR)) >= 3 && (calendarCurrent.get(Calendar.DAY_OF_YEAR) - calendarSpecified.get(Calendar.DAY_OF_YEAR))<7 )
+                    else if ((calendarSpecified.get(Calendar.DAY_OF_YEAR) - calendarCurrent.get(Calendar.DAY_OF_YEAR)) >= 3 && (calendarSpecified.get(Calendar.DAY_OF_YEAR) - calendarCurrent.get(Calendar.DAY_OF_YEAR))<=7 )
                     {
-                        switch (calendarCurrent.get(Calendar.DAY_OF_WEEK))
+                        switch (calendarSpecified.get(Calendar.DAY_OF_WEEK))
                         {
                             case(Calendar.MONDAY):
                                 datum = getString(R.string.ponedeljak);
