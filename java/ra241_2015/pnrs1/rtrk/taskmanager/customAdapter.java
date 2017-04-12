@@ -27,7 +27,20 @@ class customAdapter extends BaseAdapter{
     void addTask(Task task) {
         mTasks.add(task);
         notifyDataSetChanged();
+
     }
+
+    void editTask(String text, int image, String date, int alarm, int position) {
+
+        mTasks.get(position).setmText(text);
+        mTasks.get(position).setmAlarm(alarm);
+        mTasks.get(position).setmDate(date);
+        mTasks.get(position).setmImage(image);
+
+        notifyDataSetChanged();
+
+    }
+
 
     void removeTask (int i){
         mTasks.remove(i);

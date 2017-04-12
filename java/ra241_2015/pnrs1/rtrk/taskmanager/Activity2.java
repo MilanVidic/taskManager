@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,7 +31,7 @@ public class Activity2 extends AppCompatActivity {
 
     Boolean greenFlag, redFlag, yellowFlag, dodajBtnEnabled = false;
 
-
+    int SACUVAJ = 5;
 
 
     DatePickerDialog DatePicker;
@@ -150,7 +151,17 @@ public class Activity2 extends AppCompatActivity {
                             intent.putExtra("checkBox", R.drawable.yellow_bell);
                         }
 
-                        setResult(RESULT_OK, intent);
+                       if(getIntent().getExtras().getInt("flag") == 1)
+                       {
+                           setResult(SACUVAJ, intent);
+
+                       }
+                       else
+                       {
+                           setResult(RESULT_OK, intent);
+                       }
+
+
                         finish();
                         break;
 
@@ -172,7 +183,7 @@ public class Activity2 extends AppCompatActivity {
 
                     case R.id.datumTextView:
 
-                        //mDatePicker.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+                        DatePicker.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
                         DatePicker.show();
 
                         break;

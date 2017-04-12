@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
 
-                myIntent = new Intent(MainActivity.this, Activity2.class);
                 myIntent.putExtra("textNaBtnDodajSacuvaj", getString(R.string.sacuvaj));
                 myIntent.putExtra("textNaBtnOtkaziObrisi", getString(R.string.obrisi));
                 myIntent.putExtra("flag", 1); //ako je dodajBtnEnabled 1, btn otkazi postaje obrisi
@@ -76,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
 
     }//onCreate
 
@@ -91,12 +89,16 @@ public class MainActivity extends AppCompatActivity {
             if (intent != null)
             {
                 adapter.addTask(new Task(intent.getStringExtra("imeZadatkaText"), intent.getExtras().getInt("boja"),intent.getStringExtra("datum"), intent.getExtras().getInt("checkBox")));
-                adapter.notifyDataSetChanged();
             }
         }
         else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == RESULT_FIRST_USER)//result_obrisi
         {
             adapter.removeTask(position);
+        }
+        else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == 5)
+        {
+            adapter.editTask(intent.getStringExtra("imeZadatkaText"), intent.getExtras().getInt("boja"),intent.getStringExtra("datum"), intent.getExtras().getInt("checkBox"), position);
+            Log.d("milan", "AAAAAAAA");
         }
 
     }

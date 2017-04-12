@@ -16,4 +16,35 @@ class Task {
 
     }
 
+    public String getmText() {
+        return mText;
+    }
+
+    public void setmText(String mText) {
+        this.mText = mText;
+    }
+
+    public int getmImage() {
+        return mImage;
+    }
+
+    public void setmImage(int mImage) {
+        this.mImage = mImage;
+    }
+
+    public String getmDate() {
+        return mDate;
+    }
+
+    public void setmDate(String mDate) {
+        this.mDate = mDate;
+    }
+
+    public int getmAlarm() {
+        return mAlarm;
+    }
+
+    public void setmAlarm(int mAlarm) {
+        this.mAlarm = mAlarm;
+    }
 }
