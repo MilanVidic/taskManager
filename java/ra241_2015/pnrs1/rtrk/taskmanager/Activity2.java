@@ -10,7 +10,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,8 +29,6 @@ public class Activity2 extends AppCompatActivity {
     EditText imeZadatka, opisZadatka;
 
     Boolean greenFlag, redFlag, yellowFlag, dodajBtnEnabled = false;
-
-    int SACUVAJ = 5;
 
 
     DatePickerDialog DatePicker;
@@ -136,24 +133,24 @@ public class Activity2 extends AppCompatActivity {
                     case R.id.btnDodaj:
 
                         Intent intent = new Intent();
-                        intent.putExtra("datum",datum);
-                        intent.putExtra("imeZadatkaText", imeZadatkaText);
+                        intent.putExtra(MainActivity.DATUM,datum);
+                        intent.putExtra(MainActivity.IME_ZADATKA, imeZadatkaText);
 
                         if (redFlag)
-                            intent.putExtra("boja", R.drawable.red);
+                            intent.putExtra(MainActivity.BOJA, R.drawable.red);
                         else if (greenFlag)
-                            intent.putExtra("boja", R.drawable.green);
+                            intent.putExtra(MainActivity.BOJA, R.drawable.green);
                         else
-                            intent.putExtra("boja", R.drawable.yellow);
+                            intent.putExtra(MainActivity.BOJA, R.drawable.yellow);
 
                         if(podsjetnkikCheckBox.isChecked())
                         {
-                            intent.putExtra("checkBox", R.drawable.yellow_bell);
+                            intent.putExtra(MainActivity.CHECKBOX, R.drawable.yellow_bell);
                         }
 
-                       if(getIntent().getExtras().getInt("flag") == 1)
+                       if(getIntent().getExtras().getInt(MainActivity.FLAG_ZA_BTN_SACUVAJ) == 1)
                        {
-                           setResult(SACUVAJ, intent);
+                           setResult(MainActivity.SACUVAJ, intent);
 
                        }
                        else
@@ -211,8 +208,8 @@ public class Activity2 extends AppCompatActivity {
         Datum.setOnClickListener(ocl);
         Vrijeme.setOnClickListener(ocl);
 
-        btnDodaj.setText(getIntent().getExtras().getString("textNaBtnDodajSacuvaj"));
-        btnOtkazi.setText(getIntent().getExtras().getString("textNaBtnOtkaziObrisi"));
+        btnDodaj.setText(getIntent().getExtras().getString(MainActivity.TEXT_NA_BTN_DODAJ_SACUVAJ));
+        btnOtkazi.setText(getIntent().getExtras().getString(MainActivity.TEXT_NA_BTN_OTKAZI_OBRISI));
 
         imeZadatka.addTextChangedListener(mTextWatcher);
         opisZadatka.addTextChangedListener(mTextWatcher);

@@ -20,6 +20,14 @@ public class MainActivity extends AppCompatActivity {
     ListView list;
     final int SHORT_CLICK_NOVI_ZADATAK = 1;
     final int LONG_CLICK_NOVI_ZADATAK = 2;
+    public static String TEXT_NA_BTN_DODAJ_SACUVAJ = "textNaBtnDodajSacuvaj";
+    public static String TEXT_NA_BTN_OTKAZI_OBRISI = "textNaBtnOtkaziObrisi";
+    public static String IME_ZADATKA = "imeZadatkaText";
+    public static String BOJA = "boja";
+    public static String DATUM = "datum";
+    public static String CHECKBOX = "checkBox";
+    public static String FLAG_ZA_BTN_SACUVAJ = "checkBox";
+    public static int SACUVAJ = 5;
     int position;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -44,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.noviZadatak:
 
                             myIntent = new Intent(MainActivity.this, Activity2.class);
-                            myIntent.putExtra("textNaBtnDodajSacuvaj", getString(R.string.dodaj));
-                            myIntent.putExtra("textNaBtnOtkaziObrisi", getString(R.string.otkazi));
+                            myIntent.putExtra(TEXT_NA_BTN_DODAJ_SACUVAJ, getString(R.string.dodaj));
+                            myIntent.putExtra(TEXT_NA_BTN_OTKAZI_OBRISI, getString(R.string.otkazi));
                             startActivityForResult(myIntent, SHORT_CLICK_NOVI_ZADATAK);
                             break;
 
@@ -67,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
 
-                myIntent.putExtra("textNaBtnDodajSacuvaj", getString(R.string.sacuvaj));
-                myIntent.putExtra("textNaBtnOtkaziObrisi", getString(R.string.obrisi));
-                myIntent.putExtra("flag", 1); //ako je dodajBtnEnabled 1, btn otkazi postaje obrisi
+                myIntent.putExtra(TEXT_NA_BTN_DODAJ_SACUVAJ, getString(R.string.sacuvaj));
+                myIntent.putExtra(TEXT_NA_BTN_OTKAZI_OBRISI, getString(R.string.obrisi));
+                myIntent.putExtra(FLAG_ZA_BTN_SACUVAJ, 1); //ako je dodajBtnEnabled 1, btn otkazi postaje obrisi
                 position = pos;
                 startActivityForResult(myIntent, LONG_CLICK_NOVI_ZADATAK);
 
@@ -88,16 +96,16 @@ public class MainActivity extends AppCompatActivity {
         {
             if (intent != null)
             {
-                adapter.addTask(new Task(intent.getStringExtra("imeZadatkaText"), intent.getExtras().getInt("boja"),intent.getStringExtra("datum"), intent.getExtras().getInt("checkBox")));
+                adapter.addTask(new Task(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA),intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX)));
             }
         }
         else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == RESULT_FIRST_USER)//result_obrisi
         {
             adapter.removeTask(position);
         }
-        else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == 5)
+        else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == SACUVAJ)
         {
-            adapter.editTask(intent.getStringExtra("imeZadatkaText"), intent.getExtras().getInt("boja"),intent.getStringExtra("datum"), intent.getExtras().getInt("checkBox"), position);
+            adapter.editTask(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA),intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX), position);
             Log.d("milan", "AAAAAAAA");
         }
 
