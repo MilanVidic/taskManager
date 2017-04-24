@@ -25,5 +25,8 @@
     <string name="vrijeme">Вријеме</string>
     <string name="datum">Датум</string>
     <string name="prekosutra">Прекосутра</string>
+    <string name="visok_prioritet">Задаци високог приоритета</string>
+    <string name="srednjeg_prioriteta">Задаци средњег\nприоритета</string>
+    <string name="niskog_prioriteta">Задаци ниског\nприоритета</string>
 
 </resources>

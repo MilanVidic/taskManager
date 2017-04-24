@@ -164,9 +164,9 @@ public class Activity2 extends AppCompatActivity {
 
                     case R.id.btnOtkazi:
 
-                        Intent intent1 =new Intent();
+                        Intent intent1 = new Intent();
 
-                        if(getIntent().getExtras().getInt("flag") == 1)
+                        if(getIntent().getExtras().getInt(MainActivity.FLAG_ZA_BTN_SACUVAJ) == 1)
                         {
                             setResult(RESULT_FIRST_USER, intent1);//result_obrisi
                         }
