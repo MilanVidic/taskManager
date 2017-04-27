@@ -7,24 +7,37 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 
-public class PieChart1 extends View
+public class PieChart extends View
 {
     private RectF rect = new RectF();
+
+    public Paint getPaint() {
+        return paint;
+    }
+
     private Paint paint = new Paint();
     private int percentage = 0;
     boolean flag=true;
 
 
 
-    public PieChart1(Context context)
+    int max = 0;
+
+    public void setMax(int max) {
+        this.max = max;
+
+    }
+
+    public PieChart(Context context)
     {
         this(context, null);
     }
 
-    public PieChart1(Context context, AttributeSet attrs)
+    public PieChart(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -32,9 +45,8 @@ public class PieChart1 extends View
 
     public void setPercentage()
     {
-        this.percentage = this.getPercentage() + 1;
+        this.percentage++;
 
-        int max = 97;
         if (this.percentage == max) {
             flag = false;
         }
