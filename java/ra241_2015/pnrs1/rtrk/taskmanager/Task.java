@@ -6,6 +6,16 @@ class Task {
     int mImage;
     String mDate;
     int mAlarm;
+    private boolean checked;
+
+    public boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
 
     Task(String text, int drawable, String date, int alarm) {
 
@@ -16,9 +26,6 @@ class Task {
 
     }
 
-    public String getmText() {
-        return mText;
-    }
 
     public void setmText(String mText) {
         this.mText = mText;
@@ -32,17 +39,11 @@ class Task {
         this.mImage = mImage;
     }
 
-    public String getmDate() {
-        return mDate;
-    }
 
     public void setmDate(String mDate) {
         this.mDate = mDate;
     }
 
-    public int getmAlarm() {
-        return mAlarm;
-    }
 
     public void setmAlarm(int mAlarm) {
         this.mAlarm = mAlarm;

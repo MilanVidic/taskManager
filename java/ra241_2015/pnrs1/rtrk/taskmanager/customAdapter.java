@@ -14,9 +14,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-class customAdapter extends BaseAdapter{
+class customAdapter extends BaseAdapter {
 
     private Context mContext;
+
+    public ArrayList<Task> getmTasks() {
+        return mTasks;
+    }
+
     private ArrayList<Task> mTasks;
 
     customAdapter(Context context) {
@@ -42,7 +47,7 @@ class customAdapter extends BaseAdapter{
     }
 
 
-    void removeTask (int i){
+    void removeTask(int i) {
         mTasks.remove(i);
         notifyDataSetChanged();
     }
@@ -73,7 +78,7 @@ class customAdapter extends BaseAdapter{
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
 
-        if(view == null) {
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.task_element, null);
@@ -100,8 +105,10 @@ class customAdapter extends BaseAdapter{
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     holder.text.setPaintFlags(holder.text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                }else{
+                    mTasks.get(position).setChecked(true);
+                } else {
                     holder.text.setPaintFlags(holder.text.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                    mTasks.get(position).setChecked(false);
                 }
 
             }

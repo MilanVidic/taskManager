@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static int SACUVAJ = 5;
     int position;
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,30 +39,32 @@ public class MainActivity extends AppCompatActivity {
 
         noviZadatak = (Button) findViewById(R.id.noviZadatak);
         statistika = (Button) findViewById(R.id.statistika);
-        list= (ListView) findViewById(R.id.mainListView);
+        list = (ListView) findViewById(R.id.mainListView);
 
         adapter = new customAdapter(this);
 
-        View.OnClickListener ocl = new View.OnClickListener()
-        {
+        View.OnClickListener ocl = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                switch (v.getId())
-                {
+                switch (v.getId()) {
                     case R.id.noviZadatak:
 
-                            myIntent = new Intent(MainActivity.this, Activity2.class);
-                            myIntent.putExtra(TEXT_NA_BTN_DODAJ_SACUVAJ, getString(R.string.dodaj));
-                            myIntent.putExtra(TEXT_NA_BTN_OTKAZI_OBRISI, getString(R.string.otkazi));
-                            startActivityForResult(myIntent, SHORT_CLICK_NOVI_ZADATAK);
-                            break;
+                        myIntent = new Intent(MainActivity.this, Activity2.class);
+                        myIntent.putExtra(TEXT_NA_BTN_DODAJ_SACUVAJ, getString(R.string.dodaj));
+                        myIntent.putExtra(TEXT_NA_BTN_OTKAZI_OBRISI, getString(R.string.otkazi));
+                        startActivityForResult(myIntent, SHORT_CLICK_NOVI_ZADATAK);
+                        break;
 
                     case R.id.statistika:
 
-                            myIntent = new Intent(MainActivity.this, Activity3.class);
-                            startActivity(myIntent);
-                            break;
+
+                        myIntent = new Intent(MainActivity.this, Activity3.class);
+                        izracunajStatistiku(myIntent);
+
+                        startActivity(myIntent);
+
+                        break;
                 }
             }
         };
@@ -92,23 +95,63 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == SHORT_CLICK_NOVI_ZADATAK && resultCode == RESULT_OK)
-        {
-            if (intent != null)
-            {
-                adapter.addTask(new Task(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA),intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX)));
+        if (requestCode == SHORT_CLICK_NOVI_ZADATAK && resultCode == RESULT_OK) {
+            if (intent != null) {
+                adapter.addTask(new Task(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX)));
+
             }
-        }
-        else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == RESULT_FIRST_USER)//result_obrisi
+        } else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == RESULT_FIRST_USER)//result_obrisi
         {
             adapter.removeTask(position);
-        }
-        else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == SACUVAJ)
-        {
-            adapter.editTask(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA),intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX), position);
+        } else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == SACUVAJ) {
+            adapter.editTask(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX), position);
             Log.d("milan", "AAAAAAAA");
         }
 
+    }
+
+    public void izracunajStatistiku(Intent intent) {
+        int redBr = 0;
+        int yellowBr = 0;
+        int greenBr = 0;
+        int redBrChecked = 0;
+        int greenBrChecked = 0;
+        int yellowBrChecked = 0;
+
+        for (int i = 0; i < adapter.getCount(); i++) {
+            if (adapter.getmTasks().get(i).getmImage() == R.drawable.red) {
+                redBr++;
+                if (adapter.getmTasks().get(i).getChecked()) {
+                    redBrChecked++;
+                }
+            } else if (adapter.getmTasks().get(i).getmImage() == R.drawable.green) {
+                greenBr++;
+                if (adapter.getmTasks().get(i).getChecked()) {
+                    greenBrChecked++;
+                }
+            } else {
+                yellowBr++;
+                if (adapter.getmTasks().get(i).getChecked()) {
+                    yellowBrChecked++;
+                }
+            }
+        }
+        if (redBr == 0) {
+            redBrChecked = 0;
+        } else
+            redBrChecked = redBrChecked * 100 / redBr;
+        if (greenBr == 0) {
+            greenBrChecked = 0;
+        } else
+            greenBrChecked = greenBrChecked * 100 / greenBr;
+        if (yellowBr == 0) {
+            yellowBrChecked = 0;
+        }else
+            yellowBrChecked = yellowBrChecked * 100 / yellowBr;
+
+        intent.putExtra("redPostotak", redBrChecked);
+        intent.putExtra("greenPostotak", greenBrChecked);
+        intent.putExtra("yellowPostotak", yellowBrChecked);
     }
 
 }//mainActivity

@@ -14,13 +14,14 @@
         android:id="@+id/crveni"/>
 
     <TextView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="@string/visok_prioritet"
-       android:layout_centerHorizontal="true"
-       android:layout_below="@+id/crveni"
-       android:id="@+id/text_visok_prioritet"
-       android:layout_marginBottom="20dp"/>
+        android:id="@+id/text_visok_prioritet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/crveni"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="@string/visok_prioritet"
+        android:textAlignment="center" />
 
 
        <LinearLayout
@@ -39,11 +40,12 @@
                            android:layout_gravity="center"
                            android:id="@+id/zuti"/>
 
-                       <TextView
-                           android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"
-                           android:layout_gravity="center"
-                           android:text="@string/srednjeg_prioriteta"/>
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:text="@string/srednjeg_prioriteta"
+                   android:textAlignment="center" />
 
            </LinearLayout>
 
@@ -61,11 +63,12 @@
                        android:layout_gravity="center"
                        android:id="@+id/zeleni"/>
 
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_gravity="center"
-                       android:text="@string/niskog_prioriteta" />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:text="@string/niskog_prioriteta"
+                   android:textAlignment="center" />
            </LinearLayout>
 
        </LinearLayout>

@@ -21,15 +21,16 @@ public class Activity3 extends AppCompatActivity {
         PieChart PieChart2 = (PieChart) findViewById(R.id.zuti);
         PieChart PieChart3 = (PieChart) findViewById(R.id.zeleni);
 
-                PieChart1.setMax(85);
-                PieChart1.getPaint().setColor(Color.RED);
+
+                PieChart1.setMax(getIntent().getExtras().getInt("redPostotak"));
+                PieChart1.setColor(Color.RED);
 
 
-                PieChart2.setMax(60);
-                PieChart2.getPaint().setColor(Color.BLUE);
+                PieChart2.setMax(getIntent().getExtras().getInt("yellowPostotak"));
+                PieChart2.setColor(Color.YELLOW);
 
-                PieChart3.setMax(30);
-                PieChart3.getPaint().setColor(Color.GREEN);
+                PieChart3.setMax(getIntent().getExtras().getInt("greenPostotak"));
+                PieChart3.setColor(Color.GREEN);
     }
 
 }
