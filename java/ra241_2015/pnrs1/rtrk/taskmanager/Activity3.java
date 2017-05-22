@@ -22,6 +22,8 @@ public class Activity3 extends AppCompatActivity {
         PieChart PieChart3 = (PieChart) findViewById(R.id.zeleni);
 
 
+
+                Log.d("debag", "ASSSS = " + getIntent().getExtras().getInt("redPostotak"));
                 PieChart1.setMax(getIntent().getExtras().getInt("redPostotak"));
                 PieChart1.setColor(Color.RED);
 

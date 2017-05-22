@@ -1,17 +1,22 @@
 package ra241_2015.pnrs1.rtrk.taskmanager;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements ServiceConnection {
 
 
     Button noviZadatak, statistika;
@@ -29,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     public static String FLAG_ZA_BTN_SACUVAJ = "checkBox";
     public static int SACUVAJ = 5;
     int position;
+    public static ArrayList<Task> tasks;
+    private AidlInterface mBinderInterface;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -58,10 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.statistika:
 
-
                         myIntent = new Intent(MainActivity.this, Activity3.class);
                         izracunajStatistiku(myIntent);
-
                         startActivity(myIntent);
 
                         break;
@@ -88,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        tasks = adapter.getmTasks();
+
+
+        ServiceConnection mServiceConnection = this;
+        Intent serviceIntent = new Intent(this, NotificationService.class);
+        bindService(serviceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+
     }//onCreate
 
 
@@ -98,14 +111,28 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == SHORT_CLICK_NOVI_ZADATAK && resultCode == RESULT_OK) {
             if (intent != null) {
                 adapter.addTask(new Task(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX)));
-
+                try {
+                    mBinderInterface.notifyAdd();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         } else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == RESULT_FIRST_USER)//result_obrisi
         {
             adapter.removeTask(position);
+            try {
+                mBinderInterface.notifyDelete();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         } else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == SACUVAJ) {
             adapter.editTask(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX), position);
-            Log.d("milan", "AAAAAAAA");
+            try {
+                mBinderInterface.notifyEdit();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
         }
 
     }
@@ -154,4 +181,13 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("yellowPostotak", yellowBrChecked);
     }
 
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        mBinderInterface = AidlInterface.Stub.asInterface(service);
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+
+    }
 }//mainActivity
