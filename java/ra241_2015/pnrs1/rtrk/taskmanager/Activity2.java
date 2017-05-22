@@ -134,6 +134,7 @@ public class Activity2 extends AppCompatActivity {
 
                         Intent intent = new Intent();
                         intent.putExtra(MainActivity.DATUM,datum);
+                        intent.putExtra(MainActivity.SAT,TimeString);
                         intent.putExtra(MainActivity.IME_ZADATKA, imeZadatkaText);
 
                         if (redFlag)

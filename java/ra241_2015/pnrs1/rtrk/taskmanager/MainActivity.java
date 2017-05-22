@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     public static String IME_ZADATKA = "imeZadatkaText";
     public static String BOJA = "boja";
     public static String DATUM = "datum";
+    public static String SAT = "sat";
     public static String CHECKBOX = "checkBox";
     public static String FLAG_ZA_BTN_SACUVAJ = "checkBox";
     public static int SACUVAJ = 5;
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == SHORT_CLICK_NOVI_ZADATAK && resultCode == RESULT_OK) {
             if (intent != null) {
-                adapter.addTask(new Task(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX)));
+                adapter.addTask(new Task(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getStringExtra(SAT), intent.getExtras().getInt(CHECKBOX)));
                 try {
                     mBinderInterface.notifyAdd();
                 } catch (RemoteException e) {
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                 e.printStackTrace();
             }
         } else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == SACUVAJ) {
-            adapter.editTask(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getExtras().getInt(CHECKBOX), position);
+            adapter.editTask(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getStringExtra(SAT), intent.getExtras().getInt(CHECKBOX), position);
             try {
                 mBinderInterface.notifyEdit();
             } catch (RemoteException e) {

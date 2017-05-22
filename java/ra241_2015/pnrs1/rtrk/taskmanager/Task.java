@@ -5,47 +5,69 @@ class Task {
     String mText;
     int mImage;
     String mDate;
+    String mTime;
     int mAlarm;
     private boolean checked;
 
-    public boolean getChecked() {
+    boolean getChecked() {
         return checked;
     }
 
-    public void setChecked(boolean checked) {
+    void setChecked(boolean checked) {
         this.checked = checked;
     }
 
 
-    Task(String text, int drawable, String date, int alarm) {
+    public String getmDate() {
+        return mDate;
+    }
+
+    public String getmText() {
+        return mText;
+    }
+
+    public String getmTime() {
+        return mTime;
+    }
+
+    public void setmTime(String mTime) {
+        this.mTime = mTime;
+    }
+
+    public int getmAlarm() {
+        return mAlarm;
+    }
+
+    Task(String text, int drawable, String date, String time, int alarm) {
 
         mText = text;
         mImage = drawable;
         mDate = date;
+        mTime = time;
         mAlarm = alarm;
 
     }
 
 
-    public void setmText(String mText) {
+    void setmText(String mText) {
         this.mText = mText;
     }
 
-    public int getmImage() {
+    int getmImage() {
         return mImage;
     }
 
-    public void setmImage(int mImage) {
+    void setmImage(int mImage) {
         this.mImage = mImage;
     }
 
 
-    public void setmDate(String mDate) {
+    void setmDate(String mDate) {
         this.mDate = mDate;
     }
 
 
-    public void setmAlarm(int mAlarm) {
+    void setmAlarm(int mAlarm) {
         this.mAlarm = mAlarm;
     }
 }
