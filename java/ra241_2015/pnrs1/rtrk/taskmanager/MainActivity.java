@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     public static String TEXT_NA_BTN_DODAJ_SACUVAJ = "textNaBtnDodajSacuvaj";
     public static String TEXT_NA_BTN_OTKAZI_OBRISI = "textNaBtnOtkaziObrisi";
     public static String IME_ZADATKA = "imeZadatkaText";
+    public static String OPIS_ZADATKA = "opisZadatkaText";
     public static String BOJA = "boja";
     public static String DATUM = "datum";
     public static String SAT = "sat";
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     int position;
     public static ArrayList<Task> tasks;
     private AidlInterface mBinderInterface;
+    private TaskDataBase mTaskDataBase;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         list = (ListView) findViewById(R.id.mainListView);
 
         adapter = new customAdapter(this);
+        mTaskDataBase = new TaskDataBase(this);
 
         View.OnClickListener ocl = new View.OnClickListener() {
             @Override
@@ -106,12 +109,30 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
 
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        Task[] tasks = mTaskDataBase.readTasks();
+        adapter.update(tasks);
+    }
+
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == SHORT_CLICK_NOVI_ZADATAK && resultCode == RESULT_OK) {
             if (intent != null) {
-                adapter.addTask(new Task(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getStringExtra(SAT), intent.getExtras().getInt(CHECKBOX)));
+                Task task = new Task(intent.getStringExtra(IME_ZADATKA), intent.getStringExtra(OPIS_ZADATKA),
+                                     intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getStringExtra(SAT),
+                                     intent.getExtras().getInt(CHECKBOX));
+
+                mTaskDataBase.insert(task);
+
+                Task[] tasks = mTaskDataBase.readTasks();
+                adapter.update(tasks);
+
+
                 try {
                     mBinderInterface.notifyAdd();
                 } catch (RemoteException e) {
@@ -120,14 +141,24 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             }
         } else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == RESULT_FIRST_USER)//result_obrisi
         {
-            adapter.removeTask(position);
+
+
+            Task task = (Task) adapter.getItem(position);
+            mTaskDataBase.deleteTask(task.getmName());
+
+            Task[] tasks = mTaskDataBase.readTasks();
+            adapter.update(tasks);
+
+
             try {
                 mBinderInterface.notifyDelete();
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         } else if (requestCode == LONG_CLICK_NOVI_ZADATAK && resultCode == SACUVAJ) {
-            adapter.editTask(intent.getStringExtra(IME_ZADATKA), intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getStringExtra(SAT), intent.getExtras().getInt(CHECKBOX), position);
+            adapter.editTask(intent.getStringExtra(IME_ZADATKA), intent.getStringExtra(OPIS_ZADATKA),
+                             intent.getExtras().getInt(BOJA), intent.getStringExtra(DATUM), intent.getStringExtra(SAT),
+                             intent.getExtras().getInt(CHECKBOX), position);
             try {
                 mBinderInterface.notifyEdit();
             } catch (RemoteException e) {

@@ -12,13 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 class customAdapter extends BaseAdapter {
 
     private Context mContext;
 
-    public ArrayList<Task> getmTasks() {
+    ArrayList<Task> getmTasks() {
         return mTasks;
     }
 
@@ -35,9 +36,21 @@ class customAdapter extends BaseAdapter {
 
     }
 
-    void editTask(String text, int image, String date, String time, int alarm, int position) {
 
-        mTasks.get(position).setmText(text);
+    void update(Task[] tasks) {
+        mTasks.clear();
+        if(tasks != null) {
+            Collections.addAll(mTasks, tasks);
+        }
+
+        notifyDataSetChanged();
+    }
+
+
+    void editTask(String name,String description, int image, String date, String time, int alarm, int position) {
+
+        mTasks.get(position).setmName(name);
+        mTasks.get(position).setmDescription(description);
         mTasks.get(position).setmAlarm(alarm);
         mTasks.get(position).setmDate(date);
         mTasks.get(position).setmTime(time);
@@ -97,7 +110,7 @@ class customAdapter extends BaseAdapter {
         final ViewHolder holder = (ViewHolder) view.getTag();
 
         holder.image.setImageResource(task.mImage);
-        holder.text.setText(task.mText);
+        holder.text.setText(task.mName);
         holder.date.setText(task.mDate);
         holder.alarm.setImageResource(task.mAlarm);
 

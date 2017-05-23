@@ -60,17 +60,17 @@ class CheckerThread extends Thread {
                     if ( taskTime.get(Calendar.HOUR_OF_DAY) == current.get(Calendar.HOUR_OF_DAY) ) {
                         if(taskTime.get(Calendar.MINUTE)-current.get(Calendar.MINUTE)<=15 && taskTime.get(Calendar.MINUTE)-current.get(Calendar.MINUTE)>=0) {
                             if (notiHasItems)
-                                msg += " , " + t.getmText();
+                                msg += " , " + t.getmName();
                             else
-                                msg += t.getmText();
+                                msg += t.getmName();
                             notiHasItems = true;
                         }
                     }else if (taskTime.get(Calendar.HOUR_OF_DAY) - current.get(Calendar.HOUR_OF_DAY) == 1) {
                         if(taskTime.get(Calendar.MINUTE)+60-current.get(Calendar.MINUTE)<=15 && taskTime.get(Calendar.MINUTE)+60-current.get(Calendar.MINUTE)>=0){
                             if (notiHasItems)
-                                msg += " , " + t.getmText();
+                                msg += " , " + t.getmName();
                             else
-                                msg += t.getmText();
+                                msg += t.getmName();
                             notiHasItems = true;
                         }
                     }

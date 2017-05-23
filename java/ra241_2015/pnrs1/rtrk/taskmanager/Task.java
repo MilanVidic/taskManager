@@ -2,45 +2,22 @@ package ra241_2015.pnrs1.rtrk.taskmanager;
 
 class Task {
 
-    String mText;
+    String mName;
+
+
+
+    String mDescription;
     int mImage;
     String mDate;
-    String mTime;
+    private String mTime;
     int mAlarm;
     private boolean checked;
 
-    boolean getChecked() {
-        return checked;
-    }
 
-    void setChecked(boolean checked) {
-        this.checked = checked;
-    }
+    Task(String imeZadatka, String opisZadatka, int drawable, String date, String time, int alarm) {
 
-
-    public String getmDate() {
-        return mDate;
-    }
-
-    public String getmText() {
-        return mText;
-    }
-
-    public String getmTime() {
-        return mTime;
-    }
-
-    public void setmTime(String mTime) {
-        this.mTime = mTime;
-    }
-
-    public int getmAlarm() {
-        return mAlarm;
-    }
-
-    Task(String text, int drawable, String date, String time, int alarm) {
-
-        mText = text;
+        mName = imeZadatka;
+        mDescription = opisZadatka;
         mImage = drawable;
         mDate = date;
         mTime = time;
@@ -48,26 +25,57 @@ class Task {
 
     }
 
+    String getmName() {
+        return mName;
+    }
+    void setmName(String mName) {
+        this.mName = mName;
+    }
 
-    void setmText(String mText) {
-        this.mText = mText;
+    public String getmDescription() {
+        return mDescription;
+    }
+
+    public void setmDescription(String mDescription) {
+        this.mDescription = mDescription;
+    }
+
+
+    boolean getChecked() {
+        return checked;
+    }
+    void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    String getmDate() {
+        return mDate;
+    }
+    void setmDate(String mDate) {
+        this.mDate = mDate;
+    }
+
+    String getmTime() {
+        return mTime;
+    }
+    void setmTime(String mTime) {
+        this.mTime = mTime;
+    }
+
+    int getmAlarm() {return mAlarm;}
+    void setmAlarm(int mAlarm) {
+        this.mAlarm = mAlarm;
     }
 
     int getmImage() {
         return mImage;
     }
-
     void setmImage(int mImage) {
         this.mImage = mImage;
     }
 
 
-    void setmDate(String mDate) {
-        this.mDate = mDate;
-    }
 
 
-    void setmAlarm(int mAlarm) {
-        this.mAlarm = mAlarm;
-    }
+
 }

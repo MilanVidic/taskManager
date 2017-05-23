@@ -34,7 +34,7 @@ public class Activity2 extends AppCompatActivity {
     DatePickerDialog DatePicker;
     TimePickerDialog TimePicker;
 
-    String datum, imeZadatkaText;
+    String datum, imeZadatkaText, opisZadatkaText;
 
     protected String DateString;
     protected String TimeString;
@@ -136,6 +136,7 @@ public class Activity2 extends AppCompatActivity {
                         intent.putExtra(MainActivity.DATUM,datum);
                         intent.putExtra(MainActivity.SAT,TimeString);
                         intent.putExtra(MainActivity.IME_ZADATKA, imeZadatkaText);
+                        intent.putExtra(MainActivity.OPIS_ZADATKA, opisZadatkaText);
 
                         if (redFlag)
                             intent.putExtra(MainActivity.BOJA, R.drawable.red);
@@ -378,6 +379,7 @@ public class Activity2 extends AppCompatActivity {
         public void afterTextChanged(Editable editable) {
 
             imeZadatkaText = imeZadatka.getText().toString();
+            opisZadatkaText = opisZadatka.getText().toString();
             checkFieldsForEmptyValues();
         }
     };
