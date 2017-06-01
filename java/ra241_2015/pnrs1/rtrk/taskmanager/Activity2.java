@@ -10,6 +10,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,7 +29,7 @@ public class Activity2 extends AppCompatActivity {
 
     EditText imeZadatka, opisZadatka;
 
-    Boolean greenFlag, redFlag, yellowFlag, dodajBtnEnabled = false;
+    Boolean greenFlag, redFlag, yellowFlag, dodajBtnEnabled = false, vrijemeFlag = false, datumFlag=false;
 
 
     DatePickerDialog DatePicker;
@@ -43,6 +44,7 @@ public class Activity2 extends AppCompatActivity {
     Calendar calendarCurrent, calendarSpecified;
 
     CheckBox podsjetnkikCheckBox;
+    CheckBox checkedCheckBox;
 
     TextView Datum;
     TextView Vrijeme;
@@ -63,6 +65,7 @@ public class Activity2 extends AppCompatActivity {
         opisZadatka = (EditText) findViewById(R.id.opisZadatka);
 
         podsjetnkikCheckBox = (CheckBox) findViewById(R.id.checkBox2);
+        checkedCheckBox = (CheckBox) findViewById(R.id.checkBox);
 
 
         Datum = (TextView) findViewById(R.id.datumTextView);
@@ -138,6 +141,8 @@ public class Activity2 extends AppCompatActivity {
                         intent.putExtra(MainActivity.IME_ZADATKA, imeZadatkaText);
                         intent.putExtra(MainActivity.OPIS_ZADATKA, opisZadatkaText);
 
+
+
                         if (redFlag)
                             intent.putExtra(MainActivity.BOJA, R.drawable.red);
                         else if (greenFlag)
@@ -147,8 +152,9 @@ public class Activity2 extends AppCompatActivity {
 
                         if(podsjetnkikCheckBox.isChecked())
                         {
-                            intent.putExtra(MainActivity.CHECKBOX, R.drawable.yellow_bell);
+                            intent.putExtra(MainActivity.CHECKBOX_ALARM, R.drawable.yellow_bell);
                         }
+
 
                        if(getIntent().getExtras().getInt(MainActivity.FLAG_ZA_BTN_SACUVAJ) == 1)
                        {
@@ -182,14 +188,14 @@ public class Activity2 extends AppCompatActivity {
 
                     case R.id.datumTextView:
 
-                        DatePicker.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
+                       // DatePicker.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
                         DatePicker.show();
-
+                        datumFlag = true;
                         break;
                     case R.id.vrijemeTextView:
 
                         TimePicker.show();
-
+                        vrijemeFlag = true;
                         break;
                 }
             }
@@ -213,6 +219,33 @@ public class Activity2 extends AppCompatActivity {
         btnDodaj.setText(getIntent().getExtras().getString(MainActivity.TEXT_NA_BTN_DODAJ_SACUVAJ));
         btnOtkazi.setText(getIntent().getExtras().getString(MainActivity.TEXT_NA_BTN_OTKAZI_OBRISI));
 
+
+        if(getIntent().getExtras().getInt(MainActivity.FLAG_ZA_BTN_SACUVAJ) == 1) {
+
+            Task task = MainActivity.mTaskDataBase.readTask(String.valueOf(MainActivity.position));
+            datum = task.getmDate();
+            TimeString = task.getmTime();
+            imeZadatkaText = task.getmName();
+            opisZadatkaText = task.getmDescription();
+
+            imeZadatka.setText(getIntent().getExtras().getString(MainActivity.IME_ZADATKA));
+            opisZadatka.setText(getIntent().getExtras().getString(MainActivity.OPIS_ZADATKA));
+            Datum.setText(getIntent().getExtras().getString(MainActivity.DATUM));
+            Vrijeme.setText(getIntent().getExtras().getString(MainActivity.SAT));
+
+            if (getIntent().getExtras().getInt(MainActivity.BOJA) == R.drawable.red)
+                btnRed.performClick();
+            else if (getIntent().getExtras().getInt(MainActivity.BOJA) == R.drawable.green)
+                btnGreen.performClick();
+            else
+                btnYellow.performClick();
+            if ((getIntent().getExtras().getInt(MainActivity.CHECKBOX_ALARM) == R.drawable.yellow_bell)) {
+                Log.d("gorane", "AAAAAAAAAAAAAA");
+                podsjetnkikCheckBox.setChecked(true);
+            }
+
+        }
+
         imeZadatka.addTextChangedListener(mTextWatcher);
         opisZadatka.addTextChangedListener(mTextWatcher);
 
@@ -224,7 +257,7 @@ public class Activity2 extends AppCompatActivity {
         calendarSpecified = Calendar.getInstance();
         calendarSpecified.setTimeInMillis(System.currentTimeMillis());
 
-        datum = getString(R.string.danas);
+
 
 
         DatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener()
@@ -389,8 +422,10 @@ public class Activity2 extends AppCompatActivity {
 
         String s1 = imeZadatka.getText().toString();
         String s2 = opisZadatka.getText().toString();
+        String s3 = Datum.getText().toString();
+        String s4 = Vrijeme.getText().toString();
 
-        if(s1.equals("") || s2.equals("")){
+        if(s1.equals("") || s2.equals("") || s3.equals("") || s4.equals("")){
 
             btnDodaj.setEnabled(false);
 

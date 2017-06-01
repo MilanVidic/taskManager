@@ -4,7 +4,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +19,7 @@ class CheckerThread extends Thread {
     private NotificationManager mNotificationManager;
     private Notification.Builder mBuilder;
     private Context mContext;
+    private TaskDataBase baza;
 
     CheckerThread(Context context){
         super();
@@ -28,6 +29,8 @@ class CheckerThread extends Thread {
         mBuilder = new Notification.Builder(context)
                 .setContentTitle("Task reminder")
                 .setSmallIcon(R.drawable.red);
+
+        baza = new TaskDataBase(context);
     }
 
     @Override
@@ -46,32 +49,36 @@ class CheckerThread extends Thread {
         while(mRun){
             String msg = "15 минута до истека задатка: ";
             boolean notiHasItems=false;
-            for (Task t:MainActivity.tasks) {
-                Log.d("milan", "AAAA " + t.getmAlarm());
-                if (t.getmDate().equals(mContext.getResources().getString(R.string.danas)) && !t.getChecked() && t.getmAlarm()!=0 ) {
-                    Log.d("milan", "CCCCC");
-                    Calendar current = Calendar.getInstance();
-                    Calendar taskTime = Calendar.getInstance();
-                    try {
-                        taskTime.setTime(format.parse(t.getmTime()));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    if ( taskTime.get(Calendar.HOUR_OF_DAY) == current.get(Calendar.HOUR_OF_DAY) ) {
-                        if(taskTime.get(Calendar.MINUTE)-current.get(Calendar.MINUTE)<=15 && taskTime.get(Calendar.MINUTE)-current.get(Calendar.MINUTE)>=0) {
-                            if (notiHasItems)
-                                msg += " , " + t.getmName();
-                            else
-                                msg += t.getmName();
-                            notiHasItems = true;
+
+            Task[] tasks = baza.readTasks();
+            if (tasks!=null){
+                for (Task t: tasks) {
+
+                    if (t.getmDate().equals(mContext.getResources().getString(R.string.danas)) && t.getmChecked()==0 && t.getmAlarm()!=0 ) {
+
+                        Calendar current = Calendar.getInstance();
+                        Calendar taskTime = Calendar.getInstance();
+                        try {
+                            taskTime.setTime(format.parse(t.getmTime()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
-                    }else if (taskTime.get(Calendar.HOUR_OF_DAY) - current.get(Calendar.HOUR_OF_DAY) == 1) {
-                        if(taskTime.get(Calendar.MINUTE)+60-current.get(Calendar.MINUTE)<=15 && taskTime.get(Calendar.MINUTE)+60-current.get(Calendar.MINUTE)>=0){
-                            if (notiHasItems)
-                                msg += " , " + t.getmName();
-                            else
-                                msg += t.getmName();
-                            notiHasItems = true;
+                        if ( taskTime.get(Calendar.HOUR_OF_DAY) == current.get(Calendar.HOUR_OF_DAY) ) {
+                            if(taskTime.get(Calendar.MINUTE)-current.get(Calendar.MINUTE)<=15 && taskTime.get(Calendar.MINUTE)-current.get(Calendar.MINUTE)>=0) {
+                                if (notiHasItems)
+                                    msg += " , " + t.getmName();
+                                else
+                                    msg += t.getmName();
+                                notiHasItems = true;
+                            }
+                        }else if (taskTime.get(Calendar.HOUR_OF_DAY) - current.get(Calendar.HOUR_OF_DAY) == 1) {
+                            if(taskTime.get(Calendar.MINUTE)+60-current.get(Calendar.MINUTE)<=15 && taskTime.get(Calendar.MINUTE)+60-current.get(Calendar.MINUTE)>=0){
+                                if (notiHasItems)
+                                    msg += " , " + t.getmName();
+                                else
+                                    msg += t.getmName();
+                                notiHasItems = true;
+                            }
                         }
                     }
                 }

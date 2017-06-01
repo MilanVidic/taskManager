@@ -2,6 +2,7 @@ package ra241_2015.pnrs1.rtrk.taskmanager;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.Collections;
 class customAdapter extends BaseAdapter {
 
     private Context mContext;
+    Task task;
 
     ArrayList<Task> getmTasks() {
         return mTasks;
@@ -47,7 +49,7 @@ class customAdapter extends BaseAdapter {
     }
 
 
-    void editTask(String name,String description, int image, String date, String time, int alarm, int position) {
+    void editTask(String name,String description, int image, String date, String time, int alarm, int position, int checked) {
 
         mTasks.get(position).setmName(name);
         mTasks.get(position).setmDescription(description);
@@ -55,6 +57,7 @@ class customAdapter extends BaseAdapter {
         mTasks.get(position).setmDate(date);
         mTasks.get(position).setmTime(time);
         mTasks.get(position).setmImage(image);
+        mTasks.get(position).setmChecked(checked);
 
         notifyDataSetChanged();
 
@@ -113,16 +116,25 @@ class customAdapter extends BaseAdapter {
         holder.text.setText(task.mName);
         holder.date.setText(task.mDate);
         holder.alarm.setImageResource(task.mAlarm);
-
         holder.check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     holder.text.setPaintFlags(holder.text.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    mTasks.get(position).setChecked(true);
+
+                    Task task = MainActivity.mTaskDataBase.readTask(String.valueOf(position));
+                    Log.d("milan", "Task name = " + task.getmName());
+                    task.setmChecked(1);
+                    MainActivity.mTaskDataBase.updateTask(task, String.valueOf(position));
+
                 } else {
                     holder.text.setPaintFlags(holder.text.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
-                    mTasks.get(position).setChecked(false);
+
+
+                    Task task = MainActivity.mTaskDataBase.readTask((String.valueOf(position)));
+                    Log.d("milan", "Task name = " + task.getmName());
+                    task.setmChecked(0);
+                    MainActivity.mTaskDataBase.updateTask(task, String.valueOf(position));
                 }
 
             }

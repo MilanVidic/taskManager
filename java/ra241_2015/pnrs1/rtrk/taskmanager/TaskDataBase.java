@@ -12,15 +12,16 @@ class TaskDataBase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "tasks.db";
     private static final int DATABASE_VERSION = 1;
-
     private static final String TABLE_NAME = "task";
+
+    private static final String COLUMN_ID = "ID";
     private static final String COLUMN_TASK_NAME = "TaskName";
     private static final String COLUMN_TASK_DESCRIPTION = "TaskDescription";
     private static final String COLUMN_IMAGE = "Image";
     private static final String COLUMN_DATE = "Date";
     private static final String COLUMN_TIME = "Time";
     private static final String COLUMN_ALARM = "Alarm";
-   // private static final String COLUMN_CHECKED = "Checked";
+    private static final String COLUMN_CHECKED = "Checked";
 
 
     TaskDataBase(Context context) {
@@ -30,12 +31,14 @@ class TaskDataBase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (" +
+                COLUMN_ID + " INTEGER, " +
                 COLUMN_TASK_NAME + " TEXT, " +
                 COLUMN_TASK_DESCRIPTION + " TEXT, " +
                 COLUMN_IMAGE + " INTEGER, " +
                 COLUMN_DATE + " TEXT, " +
                 COLUMN_TIME + " TEXT, " +
-                COLUMN_ALARM + " TEXT);" );
+                COLUMN_ALARM + " TEXT, " +
+                COLUMN_CHECKED + " INTEGER);" );
     }
 
     @Override
@@ -43,18 +46,38 @@ class TaskDataBase extends SQLiteOpenHelper {
 
     }
 
-    void insert(Task task) {
+    long insert(Task task) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(COLUMN_ID, task.getmID());
         values.put(COLUMN_TASK_NAME, task.getmName());
         values.put(COLUMN_TASK_DESCRIPTION, task.getmDescription());
         values.put(COLUMN_IMAGE, task.getmImage());
         values.put(COLUMN_DATE, task.getmDate());
         values.put(COLUMN_TIME, task.getmTime());
         values.put(COLUMN_ALARM, task.getmAlarm());
+        values.put(COLUMN_CHECKED, task.getmChecked());
 
-        db.insert(TABLE_NAME, null, values);
+        long a = db.insert(TABLE_NAME, null, values);
+        close();
+        return a;
+    }
+
+    void updateTask(Task task, String id) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ID, task.getmID());
+        values.put(COLUMN_TASK_NAME, task.getmName());
+        values.put(COLUMN_TASK_DESCRIPTION, task.getmDescription());
+        values.put(COLUMN_IMAGE, task.getmImage());
+        values.put(COLUMN_DATE, task.getmDate());
+        values.put(COLUMN_TIME, task.getmTime());
+        values.put(COLUMN_ALARM, task.getmAlarm());
+        values.put(COLUMN_CHECKED, task.getmChecked());
+
+        db.update(TABLE_NAME, values,"ID=?",new String[] {id});
         close();
     }
 
@@ -76,10 +99,10 @@ class TaskDataBase extends SQLiteOpenHelper {
         return tasks;
     }
 
-    public Task readTask(String taskName) {
+    public Task readTask(String id) {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, null, COLUMN_TASK_NAME + "=?",
-                new String[] {taskName}, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, null, COLUMN_ID + "=?",
+                new String[] {id}, null, null, null);
         cursor.moveToFirst();
         Task task = createTask(cursor);
 
@@ -87,20 +110,22 @@ class TaskDataBase extends SQLiteOpenHelper {
         return task;
     }
 
-    void deleteTask(String taskName) {
+    void deleteTask(String id) {
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(TABLE_NAME, COLUMN_TASK_NAME + "=?", new String[] {taskName});
+        db.delete(TABLE_NAME, COLUMN_ID + "=?", new String[] {id});
         close();
     }
 
     private Task createTask(Cursor cursor) {
+        int ID = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
         String taskName = cursor.getString(cursor.getColumnIndex(COLUMN_TASK_NAME));
         String taskDescription = cursor.getString(cursor.getColumnIndex(COLUMN_TASK_DESCRIPTION));
         int image = cursor.getInt(cursor.getColumnIndex(COLUMN_IMAGE));
         String date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE));
         String time = cursor.getString(cursor.getColumnIndex(COLUMN_TIME));
         int alarm = cursor.getInt(cursor.getColumnIndex(COLUMN_ALARM));
+        int checked = cursor.getInt(cursor.getColumnIndex(COLUMN_CHECKED));
 
-        return new Task(taskName, taskDescription, image, date, time, alarm);
+        return new Task(ID,taskName, taskDescription, image, date, time, alarm, checked);
     }
 }

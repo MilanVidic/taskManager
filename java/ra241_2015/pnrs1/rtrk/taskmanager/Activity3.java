@@ -4,7 +4,7 @@ package ra241_2015.pnrs1.rtrk.taskmanager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
 
 public class Activity3 extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class Activity3 extends AppCompatActivity {
 
 
 
-                Log.d("debag", "ASSSS = " + getIntent().getExtras().getInt("redPostotak"));
+
                 PieChart1.setMax(getIntent().getExtras().getInt("redPostotak"));
                 PieChart1.setColor(Color.RED);
 

@@ -27,4 +27,9 @@ public class NotificationService extends Service {
     public IBinder onBind(Intent intent) {
         return mServiceNotifier;
     }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        return super.onUnbind(intent);
+    }
 }

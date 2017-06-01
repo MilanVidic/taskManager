@@ -3,27 +3,30 @@ package ra241_2015.pnrs1.rtrk.taskmanager;
 class Task {
 
     String mName;
-
-
-
-    String mDescription;
+    private String mDescription;
     int mImage;
     String mDate;
     private String mTime;
     int mAlarm;
-    private boolean checked;
+    private int mChecked;
+    int mID;
 
 
-    Task(String imeZadatka, String opisZadatka, int drawable, String date, String time, int alarm) {
+    Task(int id, String imeZadatka, String opisZadatka, int drawable, String date, String time, int alarm, int checked) {
 
+        mID = id;
         mName = imeZadatka;
         mDescription = opisZadatka;
         mImage = drawable;
         mDate = date;
         mTime = time;
         mAlarm = alarm;
-
+        mChecked = checked;
     }
+
+
+    public int getmID() {return mID;}
+    public void setmID(int mID) {this.mID = mID;}
 
     String getmName() {
         return mName;
@@ -32,20 +35,20 @@ class Task {
         this.mName = mName;
     }
 
-    public String getmDescription() {
+    String getmDescription() {
         return mDescription;
     }
 
-    public void setmDescription(String mDescription) {
+    void setmDescription(String mDescription) {
         this.mDescription = mDescription;
     }
 
 
-    boolean getChecked() {
-        return checked;
+    int getmChecked() {
+        return mChecked;
     }
-    void setChecked(boolean checked) {
-        this.checked = checked;
+    void setmChecked(int checked) {
+        this.mChecked = checked;
     }
 
     String getmDate() {
