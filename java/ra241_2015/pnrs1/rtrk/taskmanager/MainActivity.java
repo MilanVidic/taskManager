@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         }
         Log.d("redbr", "yellowBr = " + yellowBr);
         Log.d("redbr", "yellowBrChecked = " + yellowBrChecked);
-        if (redBr == 0) {
+      /*  if (redBr == 0) {
             redBrChecked = 0;
         } else
             redBrChecked = redBrChecked * 100 / redBr;
@@ -262,7 +262,13 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         if (yellowBr == 0) {
             yellowBrChecked = 0;
         }else
-            yellowBrChecked = yellowBrChecked * 100 / yellowBr;
+            yellowBrChecked = yellowBrChecked * 100 / yellowBr;*/
+
+      StatistikaNative a = new StatistikaNative();
+
+        redBrChecked = a.izracunajStatistiku(redBr,redBrChecked);
+        greenBrChecked = a.izracunajStatistiku(greenBr,greenBrChecked);
+        yellowBrChecked = a.izracunajStatistiku(yellowBr,yellowBrChecked);
 
         intent.putExtra("redPostotak", redBrChecked);
         intent.putExtra("greenPostotak", greenBrChecked);

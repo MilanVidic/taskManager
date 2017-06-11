@@ -46,7 +46,7 @@ class TaskDataBase extends SQLiteOpenHelper {
 
     }
 
-    long insert(Task task) {
+    void insert(Task task) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -59,9 +59,9 @@ class TaskDataBase extends SQLiteOpenHelper {
         values.put(COLUMN_ALARM, task.getmAlarm());
         values.put(COLUMN_CHECKED, task.getmChecked());
 
-        long a = db.insert(TABLE_NAME, null, values);
+        db.insert(TABLE_NAME, null, values);
         close();
-        return a;
+
     }
 
     void updateTask(Task task, String id) {
